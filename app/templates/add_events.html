@@ -1,0 +1,19 @@
+{% extends "base.html" %} {% block content %}
+
+<div>
+  <form method="POST" action="" enctype="multipart/form-data">
+    {{ form.hidden_tag()}}
+    <fieldset>
+      <legend>Add Event</legend>
+      <div>{{ form.title.label}} {{ form.title}}</div>
+      <div>{{ form.description.label}} {{ form.description}}</div>
+      <div>{{ form.image.label}} {{ form.image}}</div>
+    </fieldset>
+    <div>{{form.submit }}</div>
+  </form>
+</div>
+
+<h1>events</h1>
+<br />{%for event in events%}
+<a href="{{url_for('update_event', id=event.id)}}"> {{event.title}}<br /> </a>
+{%endfor%} {% endblock content%}

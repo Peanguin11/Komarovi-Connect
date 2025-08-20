@@ -1,0 +1,8 @@
+.event {
+  background-color: rgb(115, 115, 221);
+  margin: 30px 20px;
+  border-radius: 10px;
+  outline-style: solid;
+  outline-width: 10px;
+  outline-color: rgb(85, 10, 85);
+}

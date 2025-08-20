@@ -6,7 +6,6 @@
 {% endblock %} {% block content %}
 
 <h1>events</h1>
-{%for event in events%}
 <div class="event">
   {{event.title}}<br />
   {{event.description}}<br />
@@ -19,8 +18,5 @@
   {% else %}
   <p>No image available</p>
   {% endif %}<br />
-
-  <a href="{{url_for('event', id=event.id)}}">View Post</a>
 </div>
-
-{%endfor%} {% endblock content%}
+{% endblock content%}
