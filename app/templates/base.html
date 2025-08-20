@@ -5,39 +5,59 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Komarovi Connect</title>
-    <link rel="stylesheet" href="../static/css/fonts.css" />
-    <link rel="stylesheet" href="../static/css/main.css" />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/fonts.css') }}"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/main.css') }}"
+    />
+    {% block head %} {% endblock%}
   </head>
   <body>
     <div class="headerbox">
       <div class="header">
         <div class="left-section">
           <a href="/home"
-            ><img src="../static/images/k_logo3-2.png" class="logo" alt="Logo"
+            ><img
+              src="{{ url_for('static', filename='images/k_logo3-2.png') }}"
+              class="logo"
+              alt="Logo"
           /></a>
         </div>
 
         <div class="center-section">
           <a
-            href="/home"
+            href="{{url_for('home')}}"
             class="{{ 'active' if current_page == 'home' else '' }}"
             >მთავარი</a
           >
           <a
-            href="/news"
+            href="{{url_for('news')}}"
             class="{{ 'active' if current_page == 'news' else '' }}"
             >სიახლეები</a
           >
           <a
-            href="/events"
+            href="{{url_for('events')}}"
             class="{{ 'active' if current_page == 'events' else '' }}"
             >ღონისძიებები</a
           >
           <a
-            href="/projects"
+            href="{{url_for('projects')}}"
             class="{{ 'active' if current_page == 'projects' else '' }}"
             >პროექტები</a
           >
+          {% if current_user.is_authenticated %}
+          <a href="{{ url_for('adminpanel') }}">Admin Panel</a>
+          <a href="{{ url_for('logout') }}">Logout</a>
+          {% else %}
+          <a
+            href="{{url_for('adminlogin')}}"
+            class="{{ 'active' if current_page == 'adminlogin' else '' }}"
+            >Admin</a
+          >
+          {% endif %}
         </div>
         <div class="right-section">
           <button>დონაცია</button>
