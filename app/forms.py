@@ -2,6 +2,7 @@ from flask_wtf import FlaskForm
 from flask_wtf.file import FileField, FileAllowed
 from wtforms import StringField, PasswordField, SubmitField, BooleanField
 from wtforms.validators import DataRequired, Length
+from wtforms.widgets import TextArea
 
 
 class AdminLogin(FlaskForm):
@@ -13,6 +14,8 @@ class AdminLogin(FlaskForm):
 
 class NewEvent(FlaskForm):
     title = StringField('Title', validators=[DataRequired(), Length(min=1, max=500)])
-    description = StringField('Description', validators=[DataRequired(), Length(min=1, max = 2000)])
+    description = StringField('Description', validators=[DataRequired()], widget=TextArea())
+    registration_link = StringField("Registration Link", validators=[DataRequired()])
     image = FileField('Image', validators=[FileAllowed(['jpg', 'jpeg', 'png', 'gif'], 'Images only!')])
     submit = SubmitField('Upload')
+ 
