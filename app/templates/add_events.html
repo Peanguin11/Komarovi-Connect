@@ -6,7 +6,8 @@
     <fieldset>
       <legend>Add Event</legend>
       <div>{{ form.title.label}} {{ form.title}}</div>
-      <div>{{ form.description.label}} {{ form.description}}</div>
+      <div>{{ form.description.label}} {{ form.description(rows="5")}}</div>
+      <div>{{form.registration_link.label}} {{form.registration_link}}</div>
       <div>{{ form.image.label}} {{ form.image}}</div>
     </fieldset>
     <div>{{form.submit }}</div>
