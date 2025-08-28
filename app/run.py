@@ -26,9 +26,10 @@ def make_unique(string):
 
 class Events(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.String(200), nullable=False)
+    title = db.Column(db.String(500), nullable=False)
     description = db.Column(db.Text)
-    registration_link = db.Column(db.String(200))
+    registration_link = db.Column(db.String(500))
+    location = db.Column(db.String(500))
     image = db.Column(db.String(200))
     date_added = db.Column(db.DateTime, default=datetime.utcnow)
 
@@ -89,6 +90,7 @@ def add_events():
             title=form.title.data,
             description=form.description.data,
             registration_link=form.registration_link.data,
+            location=form.location.data,
             image=filename  
         )
 
@@ -115,6 +117,7 @@ def update_event(id):
         event.title = form.title.data
         event.description=form.description.data
         event.registration_link=form.registration_link.data
+        event.location=form.location.data
         event.image=filename
         db.session.add(event)
         db.session.commit()
@@ -122,6 +125,7 @@ def update_event(id):
     form.title.data = event.title
     form.description.data=event.description
     form.registration_link.data = event.registration_link
+    form.location.data=event.location
     form.image.data=event.image
     return render_template('update_events.html', form=form, event=event)
 

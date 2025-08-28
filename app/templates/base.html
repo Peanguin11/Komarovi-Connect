@@ -27,7 +27,7 @@
           /></a>
         </div>
 
-        <div class="center-section">
+        <nav class="center-section">
           <a
             href="{{url_for('home')}}"
             class="{{ 'active' if current_page == 'home' else '' }}"
@@ -58,12 +58,18 @@
             >Admin</a
           >
           {% endif %}
-        </div>
+        </nav>
         <div class="right-section">
           <button>დონაცია</button>
         </div>
+        <div class="hamburger">
+          <span class="bar"></span>
+          <span class="bar"></span>
+          <span class="bar"></span>
+        </div>
       </div>
     </div>
+    <script src="{{ url_for('static', filename='js/hamburger.js') }}"></script>
     {% block content %} {% endblock%}
   </body>
 </html>
