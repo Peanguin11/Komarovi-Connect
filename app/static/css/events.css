@@ -1,8 +1,65 @@
-.event {
-  background-color: rgb(115, 115, 221);
-  margin: 30px 20px;
-  border-radius: 10px;
-  outline-style: solid;
-  outline-width: 10px;
-  outline-color: rgb(85, 10, 85);
+body {
+  background-color: rgb(153, 207, 255);
+}
+.event-card {
+  display: grid;
+  grid-template-columns: 250px 1fr;
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  margin: 30px 50px;
+}
+
+.event-image {
+  position: relative;
+}
+.event-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.event-content {
+  padding: 1rem;
+  display: grid;
+  grid-template-rows: auto auto 1fr auto;
+  gap: 0.5rem;
+}
+
+.event-title {
+  font-size: 1.25rem;
+  font-weight: bold;
+}
+
+.event-desc {
+  color: #555;
+  font-size: 0.9rem;
+}
+
+.event-meta {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 0.5rem;
+  font-size: 0.85rem;
+  color: #666;
+}
+
+.event-link {
+  color: #2563eb;
+  font-weight: 600;
+  text-decoration: none;
+  align-self: end;
+}
+.event-link:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 768px) {
+  .event-card {
+    grid-template-columns: 1fr;
+  }
+  .event-image {
+    height: 200px;
+  }
 }

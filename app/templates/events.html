@@ -7,21 +7,32 @@
 
 <h1>events</h1>
 {%for event in events%}
-<div class="event">
-  {{event.title}}<br />
-  {{event.description}}<br />
-  <a href="{{event.registration_link}}">Register</a><br />
-  {{event.date_added}}<br />
-  {% if event.image %}
-  <img
-    src="{{ url_for('static', filename='uploads/' + event.image) }}"
-    alt="{{ event.title }}"
-  />
-  {% else %}
-  <p>No image available</p>
-  {% endif %}<br />
 
-  <a href="{{url_for('event', id=event.id)}}">View Post</a>
+<div class="event-card">
+  <div class="event-image">
+    {% if event.image %}
+    <img
+      src="{{ url_for('static', filename='uploads/' + event.image) }}"
+      alt="{{ event.title }}"
+    />
+    {% else %}
+    <p>No image available</p>
+    {% endif %}<br />
+  </div>
+
+  <div class="event-content">
+    <h2 class="event-title">{{event.title}}</h2>
+    <p class="event-desc">{{event.description}}</p>
+
+    <div class="event-meta">
+      <span>📅 {{event.date_added}}</span>
+      <span>📍 {{event.location}}</span>
+    </div>
+
+    <a href="{{url_for('event', id=event.id)}}" class="event-link"
+      >View Details →</a
+    >
+  </div>
 </div>
 
 {%endfor%} {% endblock content%}

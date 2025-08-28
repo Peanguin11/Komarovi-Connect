@@ -16,6 +16,7 @@ class NewEvent(FlaskForm):
     title = StringField('Title', validators=[DataRequired(), Length(min=1, max=500)])
     description = StringField('Description', validators=[DataRequired()], widget=TextArea())
     registration_link = StringField("Registration Link", validators=[DataRequired()])
+    location = StringField('location', validators=[DataRequired(), Length(min=1, max=500)])
     image = FileField('Image', validators=[FileAllowed(['jpg', 'jpeg', 'png', 'gif'], 'Images only!')])
     submit = SubmitField('Upload')
  
