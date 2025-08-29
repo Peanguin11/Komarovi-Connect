@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block content%}
+<div class="centered-div">
+    <form action="/add_news" method="post" enctype="multipart/form-data">
+        {{ form.name(class="form-control mt-3", placeholder="name")}}
+        {{ form.img(class="form-control mt-3", placeholder="image")}}
+        {{ form.description(class="form-control mt-3", placeholder="description")}}
+        {{ form.submit(class="form-control mt-2 bg-warning")}}
+    </form>
+
+</div>
+<!--<div class="mb-3">-->
+<!--  <label for="formFile" class="form-label">Default file input example</label>-->
+<!--  <input class="form-control" type="file" id="formFile">-->
+<!--</div>-->
+{% endblock %}

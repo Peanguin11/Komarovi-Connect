@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block content %}
+    <div class="row mt-5">
+        {% for news in all_news %}
+            <div class="col">
+                <div class="card mt-5" style="width: 18rem;">
+                    <img src="../static/images/{{ news.img  }}"
+                         class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ news.name }}</h5>
+                        <p class="card-text">{{ news['description'] }}</p>
+
+
+                        <a href="/opened_news/{{ news.id }}" class="btn btn-warning">
+
+                            გახსნა</a>
+                        {% if current_user.role=="admin"%}
+                         <a href="/delete/{{ news.id }}" class="btn btn-danger">
+
+                            DELETE</a>
+                        {%endif%}
+
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+
+{% endblock %}
