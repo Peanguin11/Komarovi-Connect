@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-5">
+  <div class="card shadow">
+    <div class="card-body">
+      <h2 class="card-title">{{ selected_news.name }}</h2>
+      {% if selected_news.img %}
+      <img src="../static/images/{{ selected_news.img  }}"
+           alt="{{ selected_news.name }}"
+           class="img-fluid my-3">
+      {% endif %}
+      <p class="card-text">{{ selected_news.description }}</p>
+    </div>
+  </div>
+</div>
+{% endblock %}
