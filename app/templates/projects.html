@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container mt-4">
+    <h2>Student Projects</h2>
+    <p class="text-muted">Support innovative student projects by contributing to their funding goals.</p>
+
+    <div class="row">
+        {% for project in projects %}
+        <div class="col-md-4 mb-4">
+            <div class="card shadow-sm h-100">
+                {% if project.image %}
+                <img src="{{ url_for('static', filename='uploads/' + project.image) }}" 
+                     class="card-img-top" alt="{{ project.title }}">
+                {% endif %}
+                <div class="card-body d-flex flex-column">
+                    <h5 class="card-title">{{ project.title }}</h5>
+                    <p class="card-text">
+                        {{ project.description[:150] }}{% if project.description|length > 150 %}...{% endif %}
+                    </p>
+
+                    <!-- Donation Progress -->
+                    <p>
+                        <strong>{{ project.current_amount }}/{{ project.funding_goal }}</strong> raised
+                    </p>
+                    <div class="progress mb-3">
+                        <div class="progress-bar" role="progressbar" 
+                             <p>Width debug: {{ ((project.current_amount * 100) // project.funding_goal) if project.funding_goal else 0 }}%</p>
+                             aria-valuenow="{{ project.current_amount }}" 
+                             aria-valuemin="0" 
+                             aria-valuemax="{{ project.funding_goal }}">
+                             {{ ((project.current_amount / project.funding_goal) * 100)|round(1) if project.funding_goal else 0 }}%
+                        </div>
+                    </div>
+
+                    <!-- Buttons -->
+                    <div class="mt-auto">
+                        <a href="{{ url_for('project', id=project.id) }}" class="btn btn-primary btn-sm">View Project</a>
+                        <a href="{{ url_for('project', id=project.id) }}#donate" class="btn btn-success btn-sm">Donate</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% else %}
+        <div class="col-12">
+            <p class="text-muted">No projects available right now. Check back soon!</p>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

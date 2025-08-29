@@ -3,7 +3,7 @@ from flask_login import UserMixin, login_user, LoginManager, login_required, log
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from datetime import datetime
-from forms import AdminLogin, NewEvent
+from forms import AdminLogin, NewEvent, NewProject
 from werkzeug.utils import secure_filename
 from flask import current_app
 from uuid import uuid4
@@ -35,6 +35,19 @@ class Events(db.Model):
 
     def __repr__(self):
         return '<Name %r>' % self.id
+
+class Projects(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(500), nullable=False)
+    description = db.Column(db.Text)
+    funding_goal = db.Column(db.Integer, nullable=False, default=0)
+    current_amount = db.Column(db.Integer, nullable=False, default=0)
+    image = db.Column(db.String(200))
+    date_added = db.Column(db.DateTime, default=datetime.utcnow)
+
+    def __repr__(self):
+        return '<Project %r>' % self.id
+
 class AdminUser(UserMixin):
     id = "admin" 
 @login_manager.user_loader
@@ -64,7 +77,22 @@ def event(id):
 
 @app.route("/projects")
 def projects():
-    return render_template('donations.html', current_page='projects')
+    allProjects = Projects.query.order_by(Projects.date_added)
+    return render_template('projects.html', current_page='projects', projects=allProjects)
+
+@app.route("/projects/<int:id>")
+def project(id):
+    project = Projects.query.get_or_404(id)
+    return render_template('project.html', project=project)
+
+@app.route("/projects/donate/<int:id>", methods=['POST'])
+def donate(id):
+    project = Projects.query.get_or_404(id)
+    amount = int(request.form.get("amount", 0))  # donation amount from form
+    if amount > 0:
+        project.current_amount += amount
+        db.session.commit()
+    return redirect(url_for('project', id=id))
 
 @app.route("/adminpanel")
 @login_required
@@ -134,7 +162,7 @@ def update_event(id):
 def delete_event(id):
     event_to_delete = Events.query.get_or_404(id)
     try:
-        if event_to_delete.image: 
+        if event_to_delete.image:
             image_path = os.path.join(
                 current_app.root_path, "static/uploads", event_to_delete.image
             )
@@ -148,6 +176,86 @@ def delete_event(id):
         return render_template('add_events.html', form=form, events=allEvents)
     except: 
         flash("error")
+
+@app.route("/adminpanel/projects", methods=['GET', 'POST'])
+@login_required
+def add_projects():
+    form = NewProject()
+    allProjects = Projects.query.order_by(Projects.date_added)
+    if form.validate_on_submit():
+        filename = None
+        if form.image.data:
+            filename = secure_filename(form.image.data.filename)
+            filename = make_unique(filename)
+            upload_path = os.path.join(current_app.root_path, 'static/uploads', filename)
+            form.image.data.save(upload_path)
+
+        project = Projects(
+            title=form.title.data,
+            description=form.description.data,
+            funding_goal=form.funding_goal.data,
+            image=filename  
+        )
+
+        db.session.add(project)
+        db.session.commit()
+
+        return redirect(url_for('add_projects'))
+
+    return render_template('add_projects.html', form=form, projects=allProjects)
+
+
+@app.route("/adminpanel/projects/update/<int:id>", methods=['GET', 'POST'])
+@login_required
+def update_project(id):
+    project = Projects.query.get_or_404(id)
+    filename = None
+    form = NewProject()
+    if form.validate_on_submit():
+        if form.image.data:
+            filename = secure_filename(form.image.data.filename)
+            filename = make_unique(filename)
+            upload_path = os.path.join(current_app.root_path, 'static/uploads', filename)
+            form.image.data.save(upload_path)
+
+        project.title = form.title.data
+        project.description = form.description.data
+        project.funding_goal = form.funding_goal.data
+        if filename:
+            project.image = filename
+
+        db.session.add(project)
+        db.session.commit()
+        return redirect(url_for('projects'))
+
+    # Pre-fill form
+    form.title.data = project.title
+    form.description.data = project.description
+    form.funding_goal.data = project.funding_goal
+    form.image.data = project.image
+    return render_template('update_projects.html', form=form, project=project)
+
+
+@app.route("/adminpanel/projects/delete/<int:id>", methods=['GET', 'POST'])
+@login_required
+def delete_project(id):
+    project_to_delete = Projects.query.get_or_404(id)
+    try:
+        if project_to_delete.image:
+            image_path = os.path.join(
+                current_app.root_path, "static/uploads", project_to_delete.image
+            )
+            if os.path.exists(image_path):
+                os.remove(image_path)
+
+        db.session.delete(project_to_delete)
+        db.session.commit()
+        form = NewProject()
+        allProjects = Projects.query.order_by(Projects.date_added)
+        return render_template('add_projects.html', form=form, projects=allProjects)
+    except:
+        flash("error")
+
 
 @app.route("/adminlogin", methods=['GET', 'POST'])
 def adminlogin():

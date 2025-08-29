@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container mt-4">
+    <!-- Project Header -->
+    <h2>{{ project.title }}</h2>
+    <p class="text-muted">Posted on {{ project.date_added.strftime('%B %d, %Y') }}</p>
+
+    <!-- Project Image -->
+    {% if project.image %}
+    <img src="{{ url_for('static', filename='uploads/' + project.image) }}" 
+         class="img-fluid rounded mb-3" alt="{{ project.title }}">
+    {% endif %}
+
+    <!-- Description -->
+    <p>{{ project.description }}</p>
+
+    <!-- Donation Progress -->
+    <h5>Funding Progress</h5>
+    <p><strong>{{ project.current_amount }}/{{ project.funding_goal }}</strong> raised</p>
+    <div class="progress mb-4">
+    <div class="progress-bar" role="progressbar"
+            <p>Width debug: {{ ((project.current_amount * 100) // project.funding_goal) if project.funding_goal else 0 }}%</p>
+         aria-valuenow="{{ project.current_amount }}"
+         aria-valuemin="0"
+         aria-valuemax="{{ project.funding_goal }}">
+         {{ ((project.current_amount / project.funding_goal) * 100)|round(1) if project.funding_goal else 0 }}%
+    </div>
+</div>
+
+    <!-- Donation Form -->
+    <h5 id="donate">Support this Project</h5>
+    <form method="POST" action="{{ url_for('donate', id=project.id) }}">
+        <div class="mb-3">
+            <label for="donationAmount" class="form-label">Enter donation amount (₾):</label>
+            <input type="number" name="amount" id="donationAmount" class="form-control" min="1" required>
+        </div>
+        <button type="submit" class="btn btn-success">Donate</button>
+        <a href="{{ url_for('projects') }}" class="btn btn-secondary">Back to Projects</a>
+    </form>
+</div>
+{% endblock %}

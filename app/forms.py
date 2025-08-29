@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileField, FileAllowed
-from wtforms import StringField, PasswordField, SubmitField, BooleanField
+from wtforms import StringField, PasswordField, SubmitField, BooleanField, TextAreaField, IntegerField
 from wtforms.validators import DataRequired, Length
 from wtforms.widgets import TextArea
 
@@ -20,3 +20,9 @@ class NewEvent(FlaskForm):
     image = FileField('Image', validators=[FileAllowed(['jpg', 'jpeg', 'png', 'gif'], 'Images only!')])
     submit = SubmitField('Upload')
  
+class NewProject(FlaskForm):
+    title = StringField('Title', validators=[DataRequired()])
+    description = TextAreaField('Description',)
+    funding_goal = IntegerField('Funding Goal', validators=[DataRequired()])
+    image = FileField('Image')
+    submit = SubmitField('Add Project')
