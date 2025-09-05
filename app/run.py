@@ -85,14 +85,6 @@ def project(id):
     project = Projects.query.get_or_404(id)
     return render_template('project.html', project=project)
 
-@app.route("/projects/donate/<int:id>", methods=['POST'])
-def donate(id):
-    project = Projects.query.get_or_404(id)
-    amount = int(request.form.get("amount", 0))  # donation amount from form
-    if amount > 0:
-        project.current_amount += amount
-        db.session.commit()
-    return redirect(url_for('project', id=id))
 
 @app.route("/adminpanel")
 @login_required
