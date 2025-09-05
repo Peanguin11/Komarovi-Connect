@@ -269,7 +269,33 @@ def logout():
     flash('Logged out successfully', 'info')
     return redirect(url_for('home'))
 
+@app.route("/donate/<int:id>", methods=['GET', 'POST'])
+def donate(id):
+    project = Projects.query.get_or_404(id)
+    
+    if request.method == 'POST':
+        try:
+            amount = int(request.form.get('amount', 0))
+            if amount > 0:
+                project.current_amount += amount
+                db.session.commit()
+                flash(f'Thank you for your donation of {amount}!', 'success')
+            else:
+                flash('Please enter a valid donation amount.', 'error')
+        except ValueError:
+            flash('Please enter a valid donation amount.', 'error')
+        
+        return redirect(url_for('project', id=id))
+    
+    return render_template('donations.html', project=project)
 
+def create_tables():
+    """Create database tables if they don't exist"""
+    with app.app_context():
+        db.create_all()
+        print("Database tables created successfully!")
+
+create_tables()
 
 if __name__ == "__main__":
     app.run(debug=True)

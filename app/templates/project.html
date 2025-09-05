@@ -21,6 +21,14 @@
   <p>No image available</p>
   {% endif %}<br />
 
+  <!-- Progress Bar -->
+  <div class="progress-container">
+    <div class="progress-bar progress-{{ project.id }}">
+      {% set progress_percent = (project.current_amount / project.funding_goal * 100)|round(1) if project.funding_goal > 0 else 0 %}
+      {{ progress_percent }}%
+    </div>
+  </div>
+
   <!-- Donate Button - Links to separate donation route -->
   <a href="{{url_for('donate', id=project.id)}}" class="donate-button">Donate to this Project</a>
 </div>

@@ -29,6 +29,14 @@
       <span>💰 {{project.current_amount}}/{{project.funding_goal}} raised</span>
     </div>
 
+    <!-- Progress Bar -->
+    <div class="progress-container">
+      <div class="progress-bar progress-{{ project.id }}">
+        {% set progress_percent = (project.current_amount / project.funding_goal * 100)|round(1) if project.funding_goal > 0 else 0 %}
+        {{ progress_percent }}%
+      </div>
+    </div>
+
     <a href="{{url_for('project', id=project.id)}}" class="project-link"
       >View Details →</a
     >
