@@ -15,6 +15,9 @@
 
                             გახსნა</a>
                         {% if current_user.role=="admin"%}
+                                <a href="/update_news/{{ news.id }}" class="btn btn-primary">
+                            EDIT
+                        </a>
                          <a href="/delete/{{ news.id }}" class="btn btn-danger">
 
                             DELETE</a>
