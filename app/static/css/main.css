@@ -1,6 +1,7 @@
 html,
 body {
   margin: 0;
+  height: 100%;
   padding: 0;
   background-color: rgb(251, 251, 252);
   font-family: "BpgIngiriArial", Arial, Helvetica, sans-serif;
@@ -65,7 +66,7 @@ button {
   left: 0;
   width: calc(100% + 80px);
   left: -40px;
-  top: 54px;
+  top: 57px;
   height: 10px;
   background-color: transparent;
   transition: background-color 0.3s ease;
@@ -86,17 +87,17 @@ button {
   margin: 5px 71.3415px;
 }
 .right-section button {
-  background-color: rgb(33, 134, 216);
+  background-color: #5682b1;
   color: white;
   font-size: 20px;
-  padding: 15px 15px;
-  border-radius: 50px;
+  padding: 11px 11px;
+  border-radius: 12px;
   border: none;
   margin: 0px 30px;
 }
 
 .right-section button:hover {
-  background-color: blueviolet;
+  background-color: #456a91;
   cursor: pointer;
 }
 .right-section button:active {
@@ -126,7 +127,7 @@ button {
   height: 105px;
 }
 
-@media (max-width: 1430px) {
+@media (max-width: 1130px) {
   .headerbox {
     height: auto;
   }

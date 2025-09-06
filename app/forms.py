@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileField, FileAllowed
-from wtforms import StringField, PasswordField, SubmitField, BooleanField
+from wtforms import StringField, PasswordField, SubmitField, BooleanField, DateField
 from wtforms.validators import DataRequired, Length
 from wtforms.widgets import TextArea
 
@@ -18,6 +18,7 @@ class NewEvent(FlaskForm):
     registration_link = StringField("Registration Link", validators=[DataRequired()])
     location = StringField('location', validators=[DataRequired(), Length(min=1, max=500)])
     image = FileField('Image', validators=[FileAllowed(['jpg', 'jpeg', 'png', 'gif'], 'Images only!')])
+    event_date = DateField('Date', format='%Y-%m-%d', validators=[DataRequired()])
     submit = SubmitField('Upload')
 
 class LoginForm(FlaskForm):

@@ -19,7 +19,7 @@ def home():
 
 @app.route("/events")
 def events():
-    allEvents = Events.query.order_by(Events.date_added)
+    allEvents = Events.query.order_by(Events.date_added.desc()).all()
     return render_template('events.html', current_page='events', events=allEvents)
 
 @app.route("/events/<int:id>")
@@ -55,6 +55,7 @@ def add_events():
             title=form.title.data,
             description=form.description.data,
             registration_link=form.registration_link.data,
+            event_date = form.event_date.data,
             location=form.location.data,
             image=filename
         )
@@ -73,6 +74,12 @@ def update_event(id):
     filename=None
     form = NewEvent()
     if form.validate_on_submit():
+        if event.image:
+            image_path = os.path.join(
+                current_app.root_path, "static/uploads", event.image
+            )
+            if os.path.exists(image_path):
+                os.remove(image_path)
         if form.image.data:
 
             filename = secure_filename(form.image.data.filename)
@@ -82,6 +89,7 @@ def update_event(id):
         event.title = form.title.data
         event.description=form.description.data
         event.registration_link=form.registration_link.data
+        event.event_date=form.event_date.data
         event.location=form.location.data
         event.image=filename
         db.session.add(event)
@@ -90,6 +98,7 @@ def update_event(id):
     form.title.data = event.title
     form.description.data=event.description
     form.registration_link.data = event.registration_link
+    form.event_date.data = event.event_date
     form.location.data=event.location
     form.image.data=event.image
     return render_template('update_events.html', form=form, event=event)
@@ -148,7 +157,7 @@ def logout():
 def all_news():
     all_news = News.query.all()
     print(all_news)
-    return render_template('all_news.html', all_news=all_news)
+    return render_template('all_news.html', all_news=all_news, current_page='news')
 
 
 

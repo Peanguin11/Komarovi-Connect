@@ -3,15 +3,26 @@
 <form method="POST" action="" enctype="multipart/form-data">
   {{ form.hidden_tag()}}
   <fieldset>
-    <legend>Update Event</legend>
-    <div>{{ form.title.label}} {{ form.title}}</div>
-    <div>{{ form.description.label}} {{ form.description}}</div>
-    <div>{{form.registration_link.label}} {{form.registration_link}}</div>
-    <div>Location {{form.location}}</div>
-    <div>{{ form.image.label}} {{ form.image}}</div>
-    <a href="{{url_for('delete_event', id=event.id)}}">Delete</a>
+    <legend style="font-weight: bold; font-size: 30px">Update Event</legend>
+    <div>{{ form.title(class="form-control mt-3", placeholder="Title")}}</div>
+    <div>
+      {{ form.description(class="form-control mt-3", placeholder="description",
+      rows="5")}}
+    </div>
+    <div>
+      {{form.registration_link(class="form-control
+      mt-3",placeholder="Registration Link")}}
+    </div>
+    <div>
+      {{form.location(class="form-control mt-3", placeholder="Location")}}
+    </div>
+    <div>
+      {{form.event_date(class="form-control mt-3", placeholder="Event date")}}
+    </div>
+    <div>{{ form.image(class="form-control mt-3", placeholder="Image")}}</div>
   </fieldset>
-  <div>{{form.submit }}</div>
+  <div>{{form.submit(class="form-control mt-2 bg-warning")}}</div>
 </form>
+<a href="{{url_for('delete_event', id=event.id)}}">Delete</a>
 
 {% endblock content%}

@@ -1,18 +1,36 @@
 body {
   background-color: rgb(153, 207, 255);
 }
+.limit-lines {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  max-height: 2.6em;
+  line-height: 1.3em;
+}
 .event-card {
   display: grid;
-  grid-template-columns: 250px 1fr;
+  grid-template-columns: 400px 1fr;
   background: white;
   border-radius: 12px;
   overflow: hidden;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  margin: 30px 50px;
+  margin: 40px 200px;
+}
+
+.featured-card {
+  grid-template-columns: 50% 50%;
 }
 
 .event-image {
   position: relative;
+  overflow: hidden;
+  height: 280.5px;
+}
+.featured-image {
+  height: 427.5px;
 }
 .event-image img {
   width: 100%;
@@ -21,45 +39,84 @@ body {
 }
 
 .event-content {
-  padding: 1rem;
+  padding: 0px 20px;
+  padding-top: 50px;
   display: grid;
-  grid-template-rows: auto auto 1fr auto;
-  gap: 0.5rem;
+  gap: 0px;
+  margin: 0px 0px;
+  grid-template-rows: auto auto auto auto;
+}
+.featured-content {
+  padding-top: 50px;
+  margin: 30px 0px;
 }
 
 .event-title {
-  font-size: 1.25rem;
-  font-weight: bold;
+  font-size: 1.8rem;
+  font-weight: bolder;
+  color: midnightblue;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.featured-title {
+  font-size: 2.5rem;
+  margin-bottom: 5px;
 }
 
 .event-desc {
   color: #555;
-  font-size: 0.9rem;
+  font-size: 1.1rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
+.featured-desc {
+  font-size: 1.3rem;
+  white-space: normal;
+}
 .event-meta {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-  gap: 0.5rem;
-  font-size: 0.85rem;
-  color: #666;
+  display: flex;
+  justify-content: space-between;
+  font-size: 16px;
+  color: #481075;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  flex-wrap: wrap;
+}
+.event-meta span {
+  font-weight: bolder;
 }
 
+.featured-meta {
+  grid-template-columns: 50% 50%;
+}
 .event-link {
   color: #2563eb;
   font-weight: 600;
   text-decoration: none;
-  align-self: end;
+  text-align: right;
 }
 .event-link:hover {
   text-decoration: underline;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1100px) {
   .event-card {
     grid-template-columns: 1fr;
+    margin: 40px auto;
+    max-width: 75%;
   }
   .event-image {
     height: 200px;
+  }
+
+  .featured-title {
+    font-size: 1.8rem;
+  }
+  .event-meta {
+    gap: 5px;
   }
 }

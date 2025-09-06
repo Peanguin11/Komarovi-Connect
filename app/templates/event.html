@@ -1,24 +1,39 @@
 {% extends "base.html" %} {% block head %}
 <link
   rel="stylesheet"
-  href="{{ url_for('static', filename='css/events.css') }}"
+  href="{{ url_for('static', filename='css/event.css') }}"
 />
 {% endblock %} {% block content %}
-
-<h1>events</h1>
-<div class="event">
-  {{event.title}}<br />
-  {{event.description}}<br />
-  {{event.registration_link}}<br />
-  {{event.location}}<br />
-  {{event.date_added}}<br />
+<div class="event-container">
   {% if event.image %}
-  <img
-    src="{{ url_for('static', filename='uploads/' + event.image) }}"
-    alt="{{ event.title }}"
-  />
-  {% else %}
-  <p>No image available</p>
-  {% endif %}<br />
+  <div class="event-banner">
+    <img
+      src="{{ url_for('static', filename='uploads/' + event.image) }}"
+      alt="{{ event.title }}"
+    />
+    <div class="event-overlay">
+      <div class="event-info">
+        <h1 class="event-title">{{ event.title }}</h1>
+        <div class="event-meta">
+          <span>📅 {{ event.event_date.strftime("%B %d, %Y") }}</span>
+          <span>📍 {{ event.location }}</span>
+          <span>🕒 Added: {{ event.date_added.strftime("%B %d, %Y") }}</span>
+        </div>
+      </div>
+      {% if event.registration_link %}
+      <a
+        href="{{ event.registration_link }}"
+        class="event-button"
+        target="_blank"
+        >რეგისტრაცია</a
+      >
+      {% endif %}
+    </div>
+  </div>
+  {% endif %}
+
+  <div class="event-description-container">
+    <p class="event-description">{{ event.description }}</p>
+  </div>
 </div>
-{% endblock content%}
+{% endblock %}
