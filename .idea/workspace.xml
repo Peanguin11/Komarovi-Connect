@@ -5,22 +5,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e32c1893-cd87-46ee-85bc-482d47812ea3" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/app/config.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/models.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/routes.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/templates/add_news.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/templates/all_news.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/templates/login.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/templates/opened_news.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/Komarovi-Connect.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/Komarovi-Connect.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/_init_.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/_init_.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/forms.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/forms.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/instance/komarovi.db" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/run.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/run.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/images/komarovi_logo.png" beforeDir="false" afterPath="$PROJECT_DIR$/app/static/images/komarovi_logo.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/templates/admin_news.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/templates/update_news.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/instance/komarovi.db" beforeDir="false" afterPath="$PROJECT_DIR$/app/instance_old_10/komarovi.db" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/routes.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/routes.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/static/images/tbilisi_library.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/templates/add_events.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/templates/add_events.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/templates/add_news.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/templates/add_news.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/templates/adminpanel.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/templates/adminpanel.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/templates/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/templates/base.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/templates/news.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/templates/all_news.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/templates/all_news.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/templates/update_events.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/templates/update_events.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -31,16 +26,20 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Python Script" />
+        <option value="HTML File" />
       </list>
     </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "customColor": "",
-  "associatedIndex": 3
-}]]></component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;customColor&quot;: &quot;&quot;,
+  &quot;associatedIndex&quot;: 3
+}</component>
   <component name="ProjectId" id="31vMnwr14aTKEcMZosEckLa6Aza" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <ConfirmationsSetting value="2" id="Add" />
@@ -51,6 +50,7 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "DefaultHtmlFileTemplate": "HTML File",
     "Python.app.executor": "Run",
     "Python.models.executor": "Run",
     "Python.routes.executor": "Run",

@@ -158,16 +158,21 @@ def add_news():
 
     if request.method == "POST":
         file_img = request.files['img']
-        images_folder = os.path.join(app.root_path, 'static/images')
-        os.makedirs(images_folder, exist_ok=True)
-        file_img.save(os.path.join(images_folder, file_img.filename))
+        filename = None
+        if file_img:
+            filename = secure_filename(file_img.filename)
+            filename = make_unique(filename)
+            images_folder = os.path.join(app.root_path, 'static/images')
+            os.makedirs(images_folder, exist_ok=True)
+            file_img.save(os.path.join(images_folder, filename))
 
-        news = News(name=form.name.data, img=file_img.filename, description=form.description.data)
+        news = News(name=form.name.data, img=filename, description=form.description.data)
         db.session.add(news)
         db.session.commit()
 
         return redirect("/")
     return render_template('add_news.html', form=form)
+
 
 
 
@@ -181,9 +186,16 @@ def opened_news(news_id):
 @app.route('/delete/<int:id>', methods=["GET", "POST"])
 def delete(id):
     selected_news = News.query.get_or_404(id)
+
+    if selected_news.img:
+        image_path = os.path.join(app.root_path, "static/images", selected_news.img)
+        if os.path.exists(image_path):
+            os.remove(image_path)
+
     db.session.delete(selected_news)
     db.session.commit()
     return redirect("/news")
+
 
 
 
@@ -197,6 +209,45 @@ def login():
             login_user(user)
         return redirect("/")
     return render_template('login.html', form=form)
+
+
+@app.route('/update_news/<int:id>', methods=["GET", "POST"])
+@login_required
+def update_news(id):
+    news_item = News.query.get_or_404(id)
+    form = Addnewsform()
+    filename = news_item.img
+
+    if form.validate_on_submit():
+        if form.img.data:
+            if news_item.img:
+                old_image_path = os.path.join(app.root_path, 'static/images', news_item.img)
+                if os.path.exists(old_image_path):
+                    os.remove(old_image_path)
+
+            file_img = form.img.data
+            filename = secure_filename(file_img.filename)
+            filename = make_unique(filename)
+            images_folder = os.path.join(app.root_path, 'static/images')
+            os.makedirs(images_folder, exist_ok=True)
+            file_img.save(os.path.join(images_folder, filename))
+
+        news_item.name = form.name.data
+        news_item.description = form.description.data
+        news_item.img = filename
+
+        db.session.commit()
+        return redirect("/news")
+
+    form.name.data = news_item.name
+    form.description.data = news_item.description
+
+    return render_template('update_news.html', form=form, news=news_item)
+@app.route("/adminpanel/news")
+@login_required
+def admin_news():
+    all_news = News.query.order_by(News.id).all()
+    return render_template('admin_news.html', all_news=all_news)
 
 
 
