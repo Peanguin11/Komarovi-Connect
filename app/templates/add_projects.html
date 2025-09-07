@@ -1,0 +1,43 @@
+{% extends "base.html" %} {% block head %}
+<link
+  rel="stylesheet"
+  href="{{ url_for('static', filename='css/add_projects.css') }}"
+/>
+{% endblock %} {% block content %}
+
+<div class="form-container">
+  <h1>Add Project</h1>
+  <form method="POST" action="" enctype="multipart/form-data">
+    {{ form.hidden_tag() }}
+
+    <div class="form-group">
+      <label>{{ form.title.label }}</label>
+      {{ form.title(class="form-control") }}
+    </div>
+
+    <div class="form-group">
+      <label>{{ form.description.label }}</label>
+      {{ form.description(class="form-control", rows="5") }}
+    </div>
+
+    <div class="form-group">
+      <label>{{ form.funding_goal.label }}</label>
+      {{ form.funding_goal(class="form-control") }}
+    </div>
+
+    <div class="form-group">
+      <label>{{ form.image.label }}</label>
+      {{ form.image(class="form-control") }}
+    </div>
+
+    {{ form.submit(class="btn-submit") }}
+  </form>
+
+  <div class="projects-list">
+    <h2>Existing Projects</h2>
+    {% for project in projects %}
+    <a href="{{ url_for('update_project', id=project.id) }}">{{ project.title }}</a>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}

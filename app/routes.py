@@ -8,7 +8,7 @@ from datetime import datetime, timedelta
 from forms import *
 from config import app, db, ADMIN_PASSWORD, ADMIN_USERNAME
 import os
-from models import make_unique,  Events, News, login_manager, User #, AdminUser
+from models import make_unique,  Events, News, Projects, login_manager, User #, AdminUser
 
 
 @app.route("/")
@@ -30,7 +30,13 @@ def event(id):
 
 @app.route("/projects")
 def projects():
-    return render_template('donations.html', current_page='projects')
+    allProjects = Projects.query.order_by(Projects.date_added)
+    return render_template('projects.html', current_page='projects', projects=allProjects,)
+
+@app.route("/projects/<int:id>")
+def project(id):
+    project = Projects.query.get_or_404(id)
+    return render_template('project.html', project=project)
 
 @app.route("/adminpanel")
 @login_required
@@ -122,6 +128,106 @@ def delete_event(id):
         return redirect(url_for('add_events'))
     except:
         flash("error")
+
+
+@app.route("/adminpanel/projects", methods=['GET', 'POST'])
+@login_required
+def add_projects():
+    form = NewProject()
+    allProjects = Projects.query.order_by(Projects.date_added)
+    if form.validate_on_submit():
+        filename = None
+        if form.image.data:
+            filename = secure_filename(form.image.data.filename)
+            filename = make_unique(filename)
+            upload_path = os.path.join(current_app.root_path, 'static/uploads', filename)
+            form.image.data.save(upload_path)
+
+        project = Projects(
+            title=form.title.data,
+            description=form.description.data,
+            funding_goal=form.funding_goal.data,
+            image=filename  
+        )
+
+        db.session.add(project)
+        db.session.commit()
+
+        return redirect(url_for('add_projects'))
+
+    return render_template('add_projects.html', form=form, projects=allProjects)
+
+
+@app.route("/adminpanel/projects/update/<int:id>", methods=['GET', 'POST'])
+@login_required
+def update_project(id):
+    project = Projects.query.get_or_404(id)
+    filename = None
+    form = NewProject()
+    if form.validate_on_submit():
+        if form.image.data:
+            filename = secure_filename(form.image.data.filename)
+            filename = make_unique(filename)
+            upload_path = os.path.join(current_app.root_path, 'static/uploads', filename)
+            form.image.data.save(upload_path)
+
+        project.title = form.title.data
+        project.description = form.description.data
+        project.funding_goal = form.funding_goal.data
+        if filename:
+            project.image = filename
+
+        db.session.add(project)
+        db.session.commit()
+        return redirect(url_for('projects'))
+
+    # Pre-fill form
+    form.title.data = project.title
+    form.description.data = project.description
+    form.funding_goal.data = project.funding_goal
+    form.image.data = project.image
+    return render_template('update_projects.html', form=form, project=project)
+
+
+@app.route("/adminpanel/projects/delete/<int:id>", methods=['GET', 'POST'])
+@login_required
+def delete_project(id):
+    project_to_delete = Projects.query.get_or_404(id)
+    try:
+        if project_to_delete.image:
+            image_path = os.path.join(
+                current_app.root_path, "static/uploads", project_to_delete.image
+            )
+            if os.path.exists(image_path):
+                os.remove(image_path)
+
+        db.session.delete(project_to_delete)
+        db.session.commit()
+        form = NewProject()
+        allProjects = Projects.query.order_by(Projects.date_added)
+        return render_template('add_projects.html', form=form, projects=allProjects)
+    except:
+        flash("error")
+    
+@app.route("/donate/<int:id>", methods=['GET', 'POST'])
+def donate(id):
+    project = Projects.query.get_or_404(id)
+    
+    if request.method == 'POST':
+        try:
+            amount = int(request.form.get('amount', 0))
+            if amount > 0:
+                project.current_amount += amount
+                db.session.commit()
+                flash(f'Thank you for your donation of {amount}!', 'success')
+            else:
+                flash('Please enter a valid donation amount.', 'error')
+        except ValueError:
+            flash('Please enter a valid donation amount.', 'error')
+        
+        return redirect(url_for('project', id=id))
+    
+    return render_template('donations.html', project=project)
 
 # @app.route("/adminlogin", methods=['GET', 'POST'])
 # def adminlogin():

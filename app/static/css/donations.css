@@ -1,0 +1,142 @@
+.project {
+  background-color: #ffffff;
+  border-radius: 10px;
+  padding: 30px;
+  margin: 20px auto;
+  max-width: 800px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.project h2 {
+  color: #1f4e79;
+  font-size: 1.8rem;
+  font-weight: bold;
+  margin-bottom: 15px;
+}
+
+.project p {
+  color: #444;
+  line-height: 1.6;
+  margin-bottom: 20px;
+  font-size: 16px;
+}
+
+/* Funding information section */
+.funding-info {
+  background-color: #f8f9fa;
+  padding: 20px;
+  border-radius: 8px;
+  margin-bottom: 25px;
+  border-left: 4px solid #1f4e79;
+}
+
+.funding-info p {
+  margin: 8px 0;
+  color: #333;
+  font-size: 15px;
+}
+
+.funding-info strong {
+  color: #1f4e79;
+  font-weight: 600;
+}
+
+/* Form styles */
+form fieldset {
+  border: 2px solid #e8e7e7;
+  border-radius: 8px;
+  padding: 25px;
+  margin: 0;
+}
+
+form legend {
+  color: #1f4e79;
+  font-weight: bold;
+  font-size: 1.2rem;
+  padding: 0 10px;
+}
+
+form label {
+  display: block;
+  color: #333;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+form input[type="number"] {
+  width: 100%;
+  max-width: 200px;
+  padding: 10px 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+  box-sizing: border-box;
+}
+
+form input[type="number"]:focus {
+  outline: none;
+  border-color: #1f4e79;
+  box-shadow: 0 0 5px rgba(31, 78, 121, 0.3);
+}
+
+/* Button styles */
+form button[type="submit"] {
+  background-color: #1f4e79;
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 4px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  margin-right: 15px;
+  transition: background-color 0.3s;
+}
+
+form button[type="submit"]:hover {
+  background-color: #16375a;
+}
+
+form a {
+  background-color: #5682b1;
+  color: white;
+  padding: 12px 24px;
+  border-radius: 4px;
+  text-decoration: none;
+  font-size: 16px;
+  font-weight: 600;
+  transition: background-color 0.3s;
+}
+
+form a:hover {
+  background-color: #5682b1;
+}
+
+/* Page title */
+h1 {
+  text-align: center;
+  color: #1f4e79;
+  font-size: 2.2rem;
+  margin-bottom: 30px;
+  font-weight: bold;
+}
+
+/* Responsive design */
+@media screen and (max-width: 700px) {
+  .project {
+    margin: 20px;
+    padding: 20px;
+  }
+  
+  h1 {
+    font-size: 1.8rem;
+  }
+  
+  form button[type="submit"],
+  form a {
+    display: block;
+    width: 100%;
+    margin: 10px 0;
+    text-align: center;
+  }
+}

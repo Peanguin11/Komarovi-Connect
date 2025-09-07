@@ -1,0 +1,53 @@
+{% extends "base.html" %} {% block head %}
+<link
+  rel="stylesheet"
+  href="{{ url_for('static', filename='css/projects.css') }}"
+/>
+</style>
+{% endblock %} {% block content %}
+<div class="project-page">
+  {% if project.image %}
+  <div class="project-banner">
+    <img
+      src="{{ url_for('static', filename='uploads/' + project.image) }}"
+      alt="{{ project.title }}"
+    />
+    <div class="project-overlay">
+      <h1 class="project-title">{{ project.title }}</h1>
+      <div class="project-meta">
+        <span class="project-date">
+          {{ project.date_added.strftime('%B %d, %Y') }}
+        </span>
+        <span class="project-funding">
+          {{ project.current_amount }}/{{ project.funding_goal }} raised
+        </span>
+      </div>
+    </div>
+  </div>
+  {% endif %}
+
+  <div class="project-content">
+    <div class="project-main">
+      <p class="project-description">{{ project.description }}</p>
+      
+      <!-- Progress Bar -->
+      <div class="progress-section">
+        <div class="progress-labels">
+          <span class="progress-label-left">დაფინანსების პროგრესი</span>
+          <span class="progress-label-right">
+            {% set progress_percent = (project.current_amount / project.funding_goal * 100)|round(1) if project.funding_goal > 0 else 0 %}
+            {{ progress_percent }}%
+          </span>
+        </div>
+        <div class="progress-container">
+          <div class="progress-bar progress-{{ project.id }}"></div>
+        </div>
+      </div>
+      
+      <div class="project-buttons">
+        <a href="{{ url_for('donate', id=project.id) }}" class="project-btn project-btn-donate">დააფინანსეთ ეს პროექტი</a>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
