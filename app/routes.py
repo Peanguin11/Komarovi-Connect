@@ -165,6 +165,12 @@ def update_project(id):
     filename = None
     form = NewProject()
     if form.validate_on_submit():
+        if project.image:
+            image_path = os.path.join(
+                current_app.root_path, "static/uploads", project.image
+            )
+            if os.path.exists(image_path):
+                os.remove(image_path)
         if form.image.data:
             filename = secure_filename(form.image.data.filename)
             filename = make_unique(filename)

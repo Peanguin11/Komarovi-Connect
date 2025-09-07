@@ -218,3 +218,18 @@
     grid-template-columns: 1fr; /* 1 column on small screens */
   }
 }
+
+.progress-container {
+  width: 100%;
+  height: 10px;
+  background-color: #eee;
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.progress-bar {
+  height: 100%;
+  background-color: #4caf50; /* green bar */
+  width: calc(var(--progress) * 1%); /* use CSS variable */
+  transition: width 0.3s ease;
+}
