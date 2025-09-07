@@ -1,0 +1,34 @@
+{% extends "base.html" %} {% block head %}
+<link
+  rel="stylesheet"
+  href="{{ url_for('static', filename='css/update_news.css') }}"
+/>
+{% endblock %} {% block content %}
+<div class="form-container">
+  <h1>Update News</h1>
+  <form method="POST" action="" enctype="multipart/form-data">
+    {{ form.hidden_tag() }}
+
+    <div class="form-group">
+      <label>{{ form.name.label }}</label>
+      {{ form.name(class="form-control") }}
+    </div>
+
+    <div class="form-group">
+      <label>{{ form.description.label }}</label>
+      {{ form.description(class="form-control", rows="5") }}
+    </div>
+
+    <div class="form-group">
+      <label>{{ form.img.label }}</label>
+      {{ form.img(class="form-control") }}
+    </div>
+
+    {{ form.submit(class="btn-submit") }}
+  </form>
+
+  <a href="{{ url_for('delete', id=news.id) }}" class="delete-link"
+    >Delete News</a
+  >
+</div>
+{% endblock %}

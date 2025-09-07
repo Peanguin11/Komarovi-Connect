@@ -1,0 +1,29 @@
+span,
+p {
+  color: rgb(177, 177, 177);
+  font-weight: bold;
+}
+
+a {
+  text-decoration: none;
+}
+.footer-container {
+  background-color: #0b1827;
+  padding: 50px 20px;
+  width: 100%;
+}
+
+.contacts {
+  display: flex;
+  flex-direction: column;
+}
+
+.links {
+  display: flex;
+  justify-content: center;
+  gap: 50px;
+}
+.links a {
+  color: rgb(177, 177, 177);
+  font-size: 20px;
+}

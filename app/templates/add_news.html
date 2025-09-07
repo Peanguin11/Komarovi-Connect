@@ -1,16 +1,33 @@
-{% extends "base.html" %}
-{% block content%}
-<div class="centered-div">
-    <form action="/add_news" method="post" enctype="multipart/form-data">
-        {{ form.name(class="form-control mt-3", placeholder="name")}}
-        {{ form.img(class="form-control mt-3", placeholder="image")}}
-        {{ form.description(class="form-control mt-3", placeholder="description")}}
-        {{ form.submit(class="form-control mt-2 bg-warning")}}
-    </form>
+{% extends "base.html" %} {% block head %}
+<link
+  rel="stylesheet"
+  href="{{ url_for('static', filename='css/add_news.css') }}"
+/>
+{% endblock %} {% block content %}
+<div class="form-container">
+  <h1>Add News</h1>
+  <form action="/add_news" method="post" enctype="multipart/form-data">
+    {{ form.hidden_tag() }}
 
+    <div class="form-group">
+      <label>{{ form.name.label }}</label>
+      {{ form.name(class="form-control", placeholder="Enter news title") }}
+    </div>
+
+    <div class="form-group">
+      <label>{{ form.img.label }}</label>
+      {{ form.img(class="form-control") }}
+    </div>
+
+    <div class="form-group">
+      <label>{{ form.description.label }}</label>
+      {{ form.description(class="form-control", rows="5", placeholder="Enter
+      description") }}
+    </div>
+
+    <div>{{ form.submit(class="btn-submit") }}</div>
+  </form>
+
+  <a href="{{ url_for('all_news') }}" class="back-link">Back to News</a>
 </div>
-<!--<div class="mb-3">-->
-<!--  <label for="formFile" class="form-label">Default file input example</label>-->
-<!--  <input class="form-control" type="file" id="formFile">-->
-<!--</div>-->
 {% endblock %}

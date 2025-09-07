@@ -33,6 +33,7 @@ class Events(db.Model):
     registration_link = db.Column(db.String(500))
     location = db.Column(db.String(500))
     image = db.Column(db.String(200))
+    event_date = db.Column(db.DateTime)
     date_added = db.Column(db.DateTime, default=datetime.utcnow)
 
     def __repr__(self):
