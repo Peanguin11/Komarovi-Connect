@@ -4,6 +4,7 @@ from flask import  render_template, url_for, flash, redirect,  current_app, requ
 from flask_login import  login_user, login_required, logout_user
 from werkzeug.security import check_password_hash
 from werkzeug.utils import secure_filename
+from datetime import datetime, timedelta
 from forms import *
 from config import app, db, ADMIN_PASSWORD, ADMIN_USERNAME
 import os
@@ -154,9 +155,32 @@ def logout():
 
 @app.route('/news')
 def all_news():
-    all_news = News.query.all()
-    print(all_news)
-    return render_template('all_news.html', all_news=all_news, current_page='news')
+    page = request.args.get('page', 1, type=int)
+    per_page = 6
+    all_news = News.query.order_by(News.date_added.desc()).paginate(page=page, per_page=per_page)
+    before_str = request.args.get("before")
+    query = News.query
+
+    # Filter: before
+    if before_str:
+        try:
+            before_date = datetime.strptime(before_str, "%Y-%m-%d")
+            next_day = before_date + timedelta(days=1)
+            query = query.filter(News.date_added < next_day)
+        except ValueError:
+            pass
+
+    # Sort newest first + paginate
+    all_news = query.order_by(News.date_added.desc()).paginate(
+        page=page, per_page=per_page, error_out=False
+    )
+
+    # Render template
+    return render_template(
+        "all_news.html",
+        all_news=all_news,
+        before=before_str,
+    )
 
 
 
