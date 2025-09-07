@@ -180,6 +180,7 @@ def all_news():
         "all_news.html",
         all_news=all_news,
         before=before_str,
+        current_page="news",
     )
 
 

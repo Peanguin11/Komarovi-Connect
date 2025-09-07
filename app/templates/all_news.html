@@ -19,8 +19,8 @@
       class="news-img"
     />
     <div class="news-content">
-      <h5 class="news-title">{{ news.name }}</h5>
-      <p class="news-description">{{ news.description }}</p>
+      <h5 class="news-title limit-lines">{{ news.name }}</h5>
+      <p class="news-description limit-lines">{{ news.description }}</p>
       <div class="news-buttons">
         <a
           href="{{ url_for('opened_news', news_id=news.id) }}"

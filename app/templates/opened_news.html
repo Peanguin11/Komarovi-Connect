@@ -1,16 +1,33 @@
-{% extends "base.html" %} {% block content %}
-<div class="container mt-5">
-  <div class="card shadow">
-    <div class="card-body">
-      <h2 class="card-title">{{ selected_news.name }}</h2>
-      {% if selected_news.img %}
-      <img
-        src="{{ url_for('static', filename='uploads/' + selected_news.img) }}"
-        alt="{{ selected_news.name }}"
-        class="img-fluid my-3"
-      />
-      {% endif %}
-      <p class="card-text">{{ selected_news.description }}</p>
+{% extends "base.html" %} {% block head %}
+<link
+  rel="stylesheet"
+  href="{{ url_for('static', filename='css/opened_news.css') }}"
+/>
+{% endblock %} {% block content %}
+<div class="news-page">
+  {% if selected_news.img %}
+  <div class="news-banner">
+    <img
+      src="{{ url_for('static', filename='uploads/' + selected_news.img) }}"
+      alt="{{ selected_news.name }}"
+    />
+    <div class="news-overlay">
+      <h1 class="news-title">{{ selected_news.name }}</h1>
+      <div class="news-meta">
+        <span class="news-date">
+          {{ selected_news.date_added.strftime('%B %d, %Y') }}
+        </span>
+        {% if selected_news.author %}
+        <span class="news-author">by {{ selected_news.author }}</span>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+  {% endif %}
+
+  <div class="news-content">
+    <div class="news-main">
+      <p class="news-description">{{ selected_news.description }}</p>
     </div>
   </div>
 </div>
