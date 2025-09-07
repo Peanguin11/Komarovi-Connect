@@ -5,6 +5,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Komarovi Connect</title>
+
     <link
       rel="stylesheet"
       href="{{ url_for('static', filename='css/fonts.css') }}"
@@ -13,13 +14,17 @@
       rel="stylesheet"
       href="{{ url_for('static', filename='css/main.css') }}"
     />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/footer.css') }}"
+    />
     {% block head %} {% endblock%}
   </head>
   <body>
     <div class="headerbox">
       <div class="header">
         <div class="left-section">
-          <a href="/home"
+          <a href="{{url_for('home')}}"
             ><img
               src="{{ url_for('static', filename='images/k_logo3-2.png') }}"
               class="logo"
@@ -34,7 +39,7 @@
             >მთავარი</a
           >
           <a
-            href="{{url_for('news')}}"
+            href="{{url_for('all_news')}}"
             class="{{ 'active' if current_page == 'news' else '' }}"
             >სიახლეები</a
           >
@@ -48,16 +53,7 @@
             class="{{ 'active' if current_page == 'projects' else '' }}"
             >პროექტები</a
           >
-          {% if current_user.is_authenticated %}
-          <a href="{{ url_for('adminpanel') }}">Admin Panel</a>
-          <a href="{{ url_for('logout') }}">Logout</a>
-          {% else %}
-          <a
-            href="{{url_for('adminlogin')}}"
-            class="{{ 'active' if current_page == 'adminlogin' else '' }}"
-            >Admin</a
-          >
-          {% endif %}
+          <a href="https://high-school-huddle.lovable.app/">Connect</a>
         </nav>
         <div class="right-section">
           <button>დონაცია</button>
@@ -70,6 +66,32 @@
       </div>
     </div>
     <script src="{{ url_for('static', filename='js/hamburger.js') }}"></script>
-    {% block content %} {% endblock%}
+
+    <main>{% block content %} {% endblock%}</main>
+
+    <footer class="footer-container">
+      <div class="links">
+        <a href="{{url_for('home')}}">მთავარი</a>
+        <a href="{{url_for('all_news')}}">სიახლეები</a>
+        <a href="{{url_for('events')}}">ღონისძიებები</a>
+        <a href="{{url_for('projects')}}">პროექტები</a>
+        {% if current_user.role=="admin" %}
+        <a href="{{ url_for('adminpanel') }}">Admin Panel</a>
+        <a href="/logout" role="button">Log Out</a>
+        {% else %}
+        <a href="/login" role="button">Log In</a>{% endif %}
+      </div>
+      <div class="contacts">
+        <span>
+          სსიპ ვლადიმირ კომაროვის თბილისის ფიზიკა-მათემატიკის N199 საჯარო სკოლა
+        </span>
+        <span> თბილისი, ვაჟა-ფშაველას N49 </span>
+        <span> (+995) XXXXXXXXX </span>
+        <span> (+995) XXXXXXXXX </span>
+      </div>
+      <div class="footer-bottom">
+        <p>Copyright &copy;2025 Designed by XXXXX</p>
+      </div>
+    </footer>
   </body>
 </html>

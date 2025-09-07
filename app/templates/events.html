@@ -3,11 +3,39 @@
   rel="stylesheet"
   href="{{ url_for('static', filename='css/events.css') }}"
 />
-{% endblock %} {% block content %}
+{% endblock %} {% block content %} {% if events %}
+<div class="event-card featured-card">
+  <div class="event-image featured-image">
+    {% if events[0].image %}
+    <img
+      src="{{ url_for('static', filename='uploads/' + events[0].image) }}"
+      alt="{{ events[0].title }}"
+    />
+    {% else %}
+    <p>No image available</p>
+    {% endif %}<br />
+  </div>
 
-<h1>events</h1>
-{%for event in events%}
+  <div class="event-content featured-content">
+    <h2 class="event-title featured-title">{{events[0].title}}</h2>
+    <p class="event-desc featured-desc limit-lines">
+      {{events[0].description}}
+    </p>
 
+    <div class="event-meta featured-meta">
+      <span>{{events[0].date_added.strftime("%B %d, %Y")}}</span>
+      <span>{{events[0].location}}</span>
+    </div>
+
+    <a
+      href="{{url_for('event', id=events[0].id)}}"
+      class="event-link featured-link"
+      >იხილეთ მეტი →</a
+    >
+  </div>
+</div>
+
+{%for event in events[1:]%}
 <div class="event-card">
   <div class="event-image">
     {% if event.image %}
@@ -25,14 +53,17 @@
     <p class="event-desc">{{event.description}}</p>
 
     <div class="event-meta">
-      <span>📅 {{event.date_added}}</span>
-      <span>📍 {{event.location}}</span>
+      <span>{{event.date_added.strftime("%B %d, %Y")}}</span>
+      <span>{{event.location}}</span>
     </div>
 
     <a href="{{url_for('event', id=event.id)}}" class="event-link"
-      >View Details →</a
+      >იხილეთ მეტი →</a
     >
   </div>
 </div>
+{%endfor%} {% else%}
 
-{%endfor%} {% endblock content%}
+<h1>currently no events</h1>
+
+{% endif%} {% endblock content%}

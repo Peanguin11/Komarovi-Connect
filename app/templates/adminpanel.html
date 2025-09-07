@@ -1,6 +1,49 @@
-{% extends "base.html" %} {% block content %}
+{% extends "base.html" %}
+{% block content %}
+<style>
+    body {
+        background-color: #f5f7fa;
+        font-family: Arial, sans-serif;
+        color: #333;
+    }
 
-<a href="{{url_for('add_events')}}">Events</a><br />
-<a href="{{url_for('add_projects')}}">Projects</a><br />
+    .admin-panel-container {
+        max-width: 500px;
+        margin: 50px auto;
+        padding: 25px;
+        background-color: #ffffff;
+        border-radius: 12px;
+        box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+        text-align: center;
+    }
 
-{% endblock content%}
+    .admin-panel-container h1 {
+        color: #4a3aff;
+        margin-bottom: 30px;
+    }
+
+    .admin-panel-container a {
+        display: block;
+        width: 200px;
+        margin: 10px auto;
+        padding: 12px 0;
+        background: linear-gradient(90deg, #4a3aff, #00bcd4);
+        color: white;
+        font-weight: bold;
+        text-decoration: none;
+        border-radius: 6px;
+        transition: 0.3s ease;
+    }
+
+    .admin-panel-container a:hover {
+        background: linear-gradient(90deg, #3a2fcc, #0097a7);
+    }
+</style>
+
+<div class="admin-panel-container">
+    <h1>Admin Panel</h1>
+    <a href="{{ url_for('add_events') }}">Events</a>
+    <a href="{{ url_for('admin_news') }}">News</a>
+    <a href="{{url_for('add_projects')}}">Projects</a><br />
+</div>
+{% endblock %}

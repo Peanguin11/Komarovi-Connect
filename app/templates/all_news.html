@@ -1,0 +1,68 @@
+{% extends "base.html" %} {% block head %}
+<link
+  rel="stylesheet"
+  href="{{ url_for('static', filename='css/news.css') }}"
+/>
+{% endblock %}{% block content %}
+
+<form method="get" action="{{ url_for('all_news') }}" class="news-filter-form">
+  <input type="date" id="before" name="before" value="{{ before or '' }}" />
+  <button type="submit">გაფილტრვა</button>
+</form>
+
+<div class="news-container">
+  {% for news in all_news.items %}
+  <div class="news-card">
+    <img
+      src="{{ url_for('static', filename='uploads/' + news.img) }}"
+      alt="news image"
+      class="news-img"
+    />
+    <div class="news-content">
+      <h5 class="news-title limit-lines">{{ news.name }}</h5>
+      <p class="news-description limit-lines">{{ news.description }}</p>
+      <div class="news-buttons">
+        <a
+          href="{{ url_for('opened_news', news_id=news.id) }}"
+          class="news-btn news-btn-open"
+          >გახსნა</a
+        >
+        {% if current_user.role == "admin" %}
+        <a
+          href="{{ url_for('update_news', id=news.id) }}"
+          class="news-btn news-btn-edit"
+          >EDIT</a
+        >
+        <a
+          href="{{ url_for('delete', id=news.id) }}"
+          class="news-btn news-btn-delete"
+          >DELETE</a
+        >
+        {% endif %}
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+
+<div class="news-pagination">
+  {% if all_news.has_prev %}
+  <a
+    href="{{ url_for('all_news', page=all_news.prev_num, before=before) }}"
+    class="news-btn news-btn-prev"
+    >წინა</a
+  >
+  {% endif %}
+
+  <span>Page {{ all_news.page }} of {{ all_news.pages }}</span>
+
+  {% if all_news.has_next %}
+  <a
+    href="{{ url_for('all_news', page=all_news.next_num, before=before) }}"
+    class="news-btn news-btn-next"
+    >შემდეგი</a
+  >
+  {% endif %}
+</div>
+
+{% endblock %}

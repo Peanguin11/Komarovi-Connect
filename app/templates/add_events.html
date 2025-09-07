@@ -1,21 +1,53 @@
-{% extends "base.html" %} {% block content %}
+{% extends "base.html" %} {% block head %}
+<link
+  rel="stylesheet"
+  href="{{ url_for('static', filename='css/add_events.css') }}"
+/>
+{% endblock %} {% block content %}
 
-<div>
+<div class="form-container">
+  <h1>Add Event</h1>
   <form method="POST" action="" enctype="multipart/form-data">
-    {{ form.hidden_tag()}}
-    <fieldset>
-      <legend>Add Event</legend>
-      <div>{{ form.title.label}} {{ form.title}}</div>
-      <div>{{ form.description.label}} {{ form.description(rows="5")}}</div>
-      <div>{{form.registration_link.label}} {{form.registration_link}}</div>
-      <div>{{form.location.label}} {{form.location}}</div>
-      <div>{{ form.image.label}} {{ form.image}}</div>
-    </fieldset>
-    <div>{{form.submit }}</div>
-  </form>
-</div>
+    {{ form.hidden_tag() }}
 
-<h1>events</h1>
-<br />{%for event in events%}
-<a href="{{url_for('update_event', id=event.id)}}"> {{event.title}}<br /> </a>
-{%endfor%} {% endblock content%}
+    <div class="form-group">
+      <label>{{ form.title.label }}</label>
+      {{ form.title(class="form-control") }}
+    </div>
+
+    <div class="form-group">
+      <label>{{ form.description.label }}</label>
+      {{ form.description(class="form-control", rows="5") }}
+    </div>
+
+    <div class="form-group">
+      <label>{{ form.registration_link.label }}</label>
+      {{ form.registration_link(class="form-control") }}
+    </div>
+
+    <div class="form-group">
+      <label>{{ form.location.label }}</label>
+      {{ form.location(class="form-control") }}
+    </div>
+
+    <div class="form-group">
+      <label>{{ form.event_date.label }}</label>
+      {{ form.event_date(class="form-control") }}
+    </div>
+
+    <div class="form-group">
+      <label>{{ form.image.label }}</label>
+      {{ form.image(class="form-control") }}
+    </div>
+
+    {{ form.submit(class="btn-submit") }}
+  </form>
+
+  <div class="events-list">
+    <h2>Existing Events</h2>
+    {% for event in events %}
+    <a href="{{ url_for('update_event', id=event.id) }}">{{ event.title }}</a>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}

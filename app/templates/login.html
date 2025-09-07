@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+{% block content %}
+<style>
+    body {
+        background-color: #f5f7fa; /* light background */
+        font-family: Arial, sans-serif;
+        color: #333;
+    }
+
+    .login-container {
+        max-width: 380px;
+        margin: 60px auto;
+        padding: 25px;
+        background-color: #ffffff; /* white card */
+        border-radius: 12px;
+        box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .login-container h1 {
+        text-align: center;
+        font-size: 26px;
+        margin-bottom: 20px;
+        color: #4a3aff; /* purple-blue */
+    }
+
+    .login-form .form-control {
+        background-color: #f0f4ff; /* very light blue */
+        color: #333;
+        border: 1px solid #d6d9f5;
+        border-radius: 6px;
+    }
+
+    .login-form .form-control::placeholder {
+        color: #7d89b3; /* muted bluish placeholder */
+    }
+
+    .login-form .form-control:focus {
+        border-color: #00bcd4; /* cyan focus */
+        box-shadow: 0 0 6px rgba(0, 188, 212, 0.5);
+    }
+
+    .login-form .btn-submit {
+        background: linear-gradient(90deg, #4a3aff, #00bcd4); /* purple to cyan */
+        border: none;
+        color: #fff;
+        font-weight: bold;
+        border-radius: 6px;
+        cursor: pointer;
+        transition: 0.3s ease;
+    }
+
+    .login-form .btn-submit:hover {
+        background: linear-gradient(90deg, #3a2fcc, #0097a7);
+    }
+
+    .login-link {
+        text-align: center;
+        margin-top: 15px;
+        color: #555;
+        font-size: 14px;
+    }
+
+    .login-link a {
+        color: #4a3aff;
+        font-weight: bold;
+        text-decoration: none;
+    }
+
+    .login-link a:hover {
+        text-decoration: underline;
+        color: #00bcd4;
+    }
+</style>
+
+<div class="login-container">
+    <h1>Log In</h1>
+    <form method="post" class="login-form">
+        {{ form.username(class="form-control mt-2", placeholder="Username") }}
+        {{ form.password(class="form-control mt-2", placeholder="Password") }}
+        {{ form.submit(class="form-control mt-3 btn-submit") }}
+    </form>
+    <p class="login-link">
+        Don’t have an account? you do not need one</a>
+    </p>
+</div>
+{% endblock %}

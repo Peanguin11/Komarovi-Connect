@@ -1,0 +1,76 @@
+body {
+  background-color: #f5f7fa;
+  font-family: Arial, sans-serif;
+  color: #333;
+}
+
+.form-container {
+  max-width: 600px;
+  margin: 40px auto;
+  padding: 25px;
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.form-container h1 {
+  text-align: center;
+  color: #4a3aff;
+  margin-bottom: 20px;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.form-group input,
+.form-group textarea {
+  width: 100%;
+  padding: 8px;
+  border-radius: 6px;
+  border: 1px solid #d6d9f5;
+  background-color: #f0f4ff;
+  font-size: 14px;
+}
+
+.form-group textarea {
+  min-height: 80px;
+  resize: vertical;
+}
+
+.btn-submit {
+  width: 100%;
+  padding: 12px 0;
+  background: linear-gradient(90deg, #4a3aff, #00bcd4);
+  color: white;
+  border: none;
+  font-weight: bold;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: 0.3s ease;
+  margin-top: 10px;
+}
+
+.btn-submit:hover {
+  background: linear-gradient(90deg, #3a2fcc, #0097a7);
+}
+
+.delete-link {
+  display: inline-block;
+  margin-top: 15px;
+  text-align: center;
+  width: 100%;
+  color: red;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.delete-link:hover {
+  text-decoration: underline;
+}
