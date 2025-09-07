@@ -27,7 +27,8 @@
       <h3>ღონისძიების დეტალები</h3>
       <ul>
         <li>
-          <strong>თარიღი:</strong> {{ event.event_date.strftime("%B %d, %Y") }}
+          <strong>თარიღი:</strong> {% if event.event_date %}{{
+          event.event_date.strftime("%B %d, %Y") }} {%endif%}
         </li>
         <li><strong>ლოკაცია:</strong> {{ event.location }}</li>
         <li>

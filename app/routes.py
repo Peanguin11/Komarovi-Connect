@@ -14,7 +14,9 @@ from models import make_unique,  Events, News, Projects, login_manager, User #, 
 @app.route("/")
 @app.route("/home")
 def home():
-    return render_template('index.html', current_page='home')
+    allEvents = Events.query.order_by(Events.date_added.desc()).all()
+    all_news = News.query.order_by(News.date_added.desc())
+    return render_template('index.html', current_page='home', weight="bold")
 
 
 

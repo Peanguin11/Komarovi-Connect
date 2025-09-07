@@ -31,7 +31,7 @@ button {
   justify-content: space-evenly;
   background-color: #15283f;
   align-items: center;
-  height: 107px;
+  height: 105px;
 }
 
 .left-section {
@@ -71,7 +71,7 @@ button {
   left: 0;
   width: calc(100% + 80px);
   left: -40px;
-  top: 55px;
+  top: 57px;
   height: 10px;
   background-color: transparent;
   transition: background-color 0.3s ease;
