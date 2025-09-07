@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileField, FileAllowed
-from wtforms import StringField, PasswordField, SubmitField, BooleanField, DateField
+from wtforms import StringField, PasswordField, SubmitField, BooleanField, DateField, TextAreaField, IntegerField
 from wtforms.validators import DataRequired, Length
 from wtforms.widgets import TextArea
 
@@ -34,3 +34,10 @@ class Addnewsform(FlaskForm):
     img = FileField('image')
     description = StringField('description')
     submit = SubmitField('add news')
+
+class NewProject(FlaskForm):
+    title = StringField('Title', validators=[DataRequired()])
+    description = TextAreaField('Description',)
+    funding_goal = IntegerField('Funding Goal', validators=[DataRequired()])
+    image = FileField('Image')
+    submit = SubmitField('Add Project')

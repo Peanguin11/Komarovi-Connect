@@ -39,6 +39,18 @@ class Events(db.Model):
     def __repr__(self):
         return '<Name %r>' % self.id
 
+class Projects(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(500), nullable=False)
+    description = db.Column(db.Text)
+    funding_goal = db.Column(db.Integer, nullable=False, default=0)
+    current_amount = db.Column(db.Integer, nullable=False, default=0)
+    image = db.Column(db.String(200))
+    date_added = db.Column(db.DateTime, default=datetime.utcnow)
+
+    def __repr__(self):
+        return '<Project %r>' % self.id
+
 # class AdminUser(UserMixin):
 #     id = "admin"
 
@@ -200,6 +212,26 @@ all_events = [
         "image": "book_day.jpg",
     },
 ]
+all_projects = [
+    {
+        "title": "კვანტური გამოთვლითი კლუბი",
+        "description": "სტუდენტების ხელმძღვანელობით შექმნილი კვლევითი ჯგუფი, რომელიც იკვლევს კვანტურ ალგორითმებს და მათ გამოყენებას კრიპტოგრაფიასა და ოპტიმიზაციაში.",
+        "funding_goal": "1000",
+        "image": "quantum_computing.jpg",
+    },
+    {
+        "title": "კვანტური გამოთვლითი კლუბი",
+        "description": "სტუდენტების ხელმძღვანელობით შექმნილი კვლევითი ჯგუფი, რომელიც იკვლევს კვანტურ ალგორითმებს და მათ გამოყენებას კრიპტოგრაფიასა და ოპტიმიზაციაში.",
+        "funding_goal": "1000",
+        "image": "quantum_computing.jpg",
+    },
+    {
+        "title": "კვანტური გამოთვლითი კლუბი",
+        "description": "სტუდენტების ხელმძღვანელობით შექმნილი კვლევითი ჯგუფი, რომელიც იკვლევს კვანტურ ალგორითმებს და მათ გამოყენებას კრიპტოგრაფიასა და ოპტიმიზაციაში.",
+        "funding_goal": "1000",
+        "image": "quantum_computing.jpg",
+    },
+]
 
 
 if __name__ == '__main__' :
@@ -223,6 +255,14 @@ if __name__ == '__main__' :
                 location=event['location'],
                 image=event['image']
             )
+        for project in all_projects:
+            new_project = Projects(
+                title=project['title'],
+                description=project['description'],
+                funding_goal=project['funding_goal'],
+                image=project['image']
+            )
             db.session.add(new_event)
+            db.session.add(new_project)
 
         db.session.commit()

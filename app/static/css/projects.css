@@ -1,0 +1,235 @@
+.limit-lines {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  max-height: 2.6em;
+  line-height: 1.3em;
+}
+
+/* Projects container */
+.projects-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* 3 columns */
+  gap: 20px;
+  justify-content: center;
+  padding: 20px;
+}
+
+/* Single project card */
+.project-card {
+  background-color: #ffffff;
+  border-radius: 8px;
+  overflow: hidden;
+  width: 100%; /* controlled by grid */
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+}
+
+.project-img {
+  width: 100%;
+  height: 200px; /* slightly taller */
+  object-fit: cover;
+}
+
+.project-content {
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+}
+
+.project-title {
+  font-size: 20px;
+  font-weight: bold;
+  margin: 10px 0 5px;
+  color: #1f4e79;
+}
+
+.project-description {
+  font-size: 14px;
+  color: #555555;
+  margin-bottom: 15px;
+}
+
+/* Progress Bar Section */
+.progress-section {
+  margin: 10px 0;
+}
+
+.progress-labels {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 5px;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.progress-label-left {
+  color: #1f4e79;
+}
+
+.progress-label-right {
+  color: #1f4e79;
+}
+
+.progress-container {
+  width: 100%;
+  height: 16px;
+  background-color: #e8e7e7;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+.progress-bar {
+  height: 100%;
+  background-color: #1f4e79;
+  border-radius: 8px;
+  width: 0%;
+}
+
+/* Buttons inside card */
+.project-buttons {
+  display: flex;
+  gap: 5px;
+  flex-wrap: wrap;
+  margin-top: 10px;
+}
+
+.project-btn {
+  text-decoration: none;
+  padding: 5px 10px;
+  border-radius: 4px;
+  font-size: 12px;
+  color: white;
+}
+
+.project-btn-open {
+  background-color: #1f4e79;
+}
+
+.project-btn-donate {
+  background-color: #5682b1;
+}
+
+.project-btn:hover {
+  opacity: 0.85;
+}
+
+/* Individual project page styles */
+.project-page {
+  font-family: "Segoe UI", sans-serif;
+  margin: 0 auto;
+  max-width: 1100px;
+  padding: 20px;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.project-banner {
+  position: relative;
+  height: 180px; /* thinner banner */
+  overflow: hidden;
+  border-radius: 5px;
+  margin-bottom: 0px;
+}
+
+.project-banner img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: brightness(0.6);
+}
+
+.project-overlay {
+  position: absolute;
+  bottom: 20px;
+  left: 30px;
+  color: white;
+}
+
+.project-page .project-title {
+  font-size: 1.8rem;
+  font-weight: bold;
+  margin: 0;
+  color: white;
+}
+
+.project-meta {
+  font-size: 0.9rem;
+  margin-top: 5px;
+  opacity: 0.9;
+}
+
+.project-content {
+  gap: 20px;
+  flex: 1;
+}
+
+.project-main {
+  background: #fff;
+  min-height: 100vh;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.project-main .project-description {
+  line-height: 1.6;
+  color: #444;
+  font-size: 16px;
+}
+
+.project-main .progress-section {
+  margin: 20px 0;
+}
+
+.project-main .progress-labels {
+  font-size: 14px;
+  margin-bottom: 8px;
+}
+
+.project-main .progress-container {
+  height: 12px;
+}
+
+.project-main .project-buttons {
+  margin-top: 20px;
+}
+
+.project-main .project-btn {
+  padding: 8px 15px;
+  font-size: 14px;
+}
+
+/* Responsive design */
+@media screen and (max-width: 1024px) {
+  .projects-container {
+    grid-template-columns: repeat(2, 1fr); /* 2 columns on medium screens */
+  }
+}
+
+@media screen and (max-width: 700px) {
+  .projects-container {
+    grid-template-columns: 1fr; /* 1 column on small screens */
+  }
+}
+
+.progress-container {
+  width: 100%;
+  height: 10px;
+  background-color: #eee;
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.progress-bar {
+  height: 100%;
+  background-color: #4caf50; /* green bar */
+  width: calc(var(--progress) * 1%); /* use CSS variable */
+  transition: width 0.3s ease;
+}
