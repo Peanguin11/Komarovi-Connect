@@ -1,127 +1,53 @@
-{% extends "base.html" %}
-{% block content %}
-<style>
-    body {
-        background-color: #f5f7fa;
-        font-family: Arial, sans-serif;
-        color: #333;
-    }
-
-    .form-container {
-        max-width: 600px;
-        margin: 40px auto;
-        padding: 25px;
-        background-color: #ffffff;
-        border-radius: 12px;
-        box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
-    }
-
-    .form-container h1 {
-        text-align: center;
-        color: #4a3aff;
-        margin-bottom: 20px;
-    }
-
-    .form-group {
-        margin-bottom: 15px;
-    }
-
-    .form-group label {
-        display: block;
-        margin-bottom: 5px;
-        font-weight: bold;
-    }
-
-    .form-group input,
-    .form-group textarea {
-        width: 100%;
-        padding: 8px;
-        border-radius: 6px;
-        border: 1px solid #d6d9f5;
-        background-color: #f0f4ff;
-        font-size: 14px;
-    }
-
-    .form-group textarea {
-        min-height: 80px;
-        resize: vertical;
-    }
-
-    .btn-submit {
-        width: 100%;
-        padding: 12px 0;
-        background: linear-gradient(90deg, #4a3aff, #00bcd4);
-        color: white;
-        border: none;
-        font-weight: bold;
-        border-radius: 6px;
-        cursor: pointer;
-        transition: 0.3s ease;
-    }
-
-    .btn-submit:hover {
-        background: linear-gradient(90deg, #3a2fcc, #0097a7);
-    }
-
-    .events-list {
-        margin-top: 40px;
-    }
-
-    .events-list a {
-        display: block;
-        padding: 8px 12px;
-        margin-bottom: 8px;
-        background-color: #f0f4ff;
-        border-radius: 6px;
-        color: #4a3aff;
-        text-decoration: none;
-        font-weight: bold;
-        transition: 0.3s ease;
-    }
-
-    .events-list a:hover {
-        background-color: #e0e7ff;
-    }
-</style>
+{% extends "base.html" %} {% block head %}
+<link
+  rel="stylesheet"
+  href="{{ url_for('static', filename='css/add_events.css') }}"
+/>
+{% endblock %} {% block content %}
 
 <div class="form-container">
-    <h1>Add Event</h1>
-    <form method="POST" action="" enctype="multipart/form-data">
-        {{ form.hidden_tag() }}
+  <h1>Add Event</h1>
+  <form method="POST" action="" enctype="multipart/form-data">
+    {{ form.hidden_tag() }}
 
-        <div class="form-group">
-            <label>{{ form.title.label }}</label>
-            {{ form.title(class="form-control") }}
-        </div>
-
-        <div class="form-group">
-            <label>{{ form.description.label }}</label>
-            {{ form.description(class="form-control", rows="5") }}
-        </div>
-
-        <div class="form-group">
-            <label>{{ form.registration_link.label }}</label>
-            {{ form.registration_link(class="form-control") }}
-        </div>
-
-        <div class="form-group">
-            <label>{{ form.location.label }}</label>
-            {{ form.location(class="form-control") }}
-        </div>
-
-        <div class="form-group">
-            <label>{{ form.image.label }}</label>
-            {{ form.image(class="form-control") }}
-        </div>
-
-        {{ form.submit(class="btn-submit") }}
-    </form>
-
-    <div class="events-list">
-        <h2>Existing Events</h2>
-        {% for event in events %}
-            <a href="{{ url_for('update_event', id=event.id) }}">{{ event.title }}</a>
-        {% endfor %}
+    <div class="form-group">
+      <label>{{ form.title.label }}</label>
+      {{ form.title(class="form-control") }}
     </div>
+
+    <div class="form-group">
+      <label>{{ form.description.label }}</label>
+      {{ form.description(class="form-control", rows="5") }}
+    </div>
+
+    <div class="form-group">
+      <label>{{ form.registration_link.label }}</label>
+      {{ form.registration_link(class="form-control") }}
+    </div>
+
+    <div class="form-group">
+      <label>{{ form.location.label }}</label>
+      {{ form.location(class="form-control") }}
+    </div>
+
+    <div class="form-group">
+      <label>{{ form.event_date.label }}</label>
+      {{ form.event_date(class="form-control") }}
+    </div>
+
+    <div class="form-group">
+      <label>{{ form.image.label }}</label>
+      {{ form.image(class="form-control") }}
+    </div>
+
+    {{ form.submit(class="btn-submit") }}
+  </form>
+
+  <div class="events-list">
+    <h2>Existing Events</h2>
+    {% for event in events %}
+    <a href="{{ url_for('update_event', id=event.id) }}">{{ event.title }}</a>
+    {% endfor %}
+  </div>
 </div>
 {% endblock %}

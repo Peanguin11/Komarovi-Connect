@@ -19,7 +19,7 @@ def home():
 
 @app.route("/events")
 def events():
-    allEvents = Events.query.order_by(Events.date_added)
+    allEvents = Events.query.order_by(Events.date_added.desc()).all()
     return render_template('events.html', current_page='events', events=allEvents)
 
 @app.route("/events/<int:id>")
@@ -40,7 +40,7 @@ def adminpanel():
 @login_required
 def add_events():
     form = NewEvent()
-    allEvents = Events.query.order_by(Events.date_added)
+    allEvents = Events.query.order_by(Events.date_added.desc())
     if form.validate_on_submit():
         filename = None
         if form.image.data:
@@ -55,6 +55,7 @@ def add_events():
             title=form.title.data,
             description=form.description.data,
             registration_link=form.registration_link.data,
+            event_date = form.event_date.data,
             location=form.location.data,
             image=filename
         )
@@ -73,8 +74,13 @@ def update_event(id):
     filename=None
     form = NewEvent()
     if form.validate_on_submit():
+        if event.image:
+            image_path = os.path.join(
+                current_app.root_path, "static/uploads", event.image
+            )
+            if os.path.exists(image_path):
+                os.remove(image_path)
         if form.image.data:
-
             filename = secure_filename(form.image.data.filename)
             filename = make_unique(filename)
             upload_path = os.path.join(current_app.root_path, 'static/uploads', filename)
@@ -82,6 +88,7 @@ def update_event(id):
         event.title = form.title.data
         event.description=form.description.data
         event.registration_link=form.registration_link.data
+        event.event_date=form.event_date.data
         event.location=form.location.data
         event.image=filename
         db.session.add(event)
@@ -90,6 +97,7 @@ def update_event(id):
     form.title.data = event.title
     form.description.data=event.description
     form.registration_link.data = event.registration_link
+    form.event_date.data = event.event_date
     form.location.data=event.location
     form.image.data=event.image
     return render_template('update_events.html', form=form, event=event)
@@ -110,7 +118,7 @@ def delete_event(id):
         db.session.commit()
         form = NewEvent()
         allEvents = Events.query.order_by(Events.date_added)
-        return render_template('add_events.html', form=form, events=allEvents)
+        return redirect(url_for('add_events'))
     except:
         flash("error")
 
@@ -148,7 +156,7 @@ def logout():
 def all_news():
     all_news = News.query.all()
     print(all_news)
-    return render_template('all_news.html', all_news=all_news)
+    return render_template('all_news.html', all_news=all_news, current_page='news')
 
 
 
@@ -162,7 +170,7 @@ def add_news():
         if file_img:
             filename = secure_filename(file_img.filename)
             filename = make_unique(filename)
-            images_folder = os.path.join(app.root_path, 'static/images')
+            images_folder = os.path.join(current_app.root_path, 'static/uploads')
             os.makedirs(images_folder, exist_ok=True)
             file_img.save(os.path.join(images_folder, filename))
 
@@ -188,13 +196,13 @@ def delete(id):
     selected_news = News.query.get_or_404(id)
 
     if selected_news.img:
-        image_path = os.path.join(app.root_path, "static/images", selected_news.img)
+        image_path = os.path.join(current_app.root_path, "static/uploads", selected_news.img)
         if os.path.exists(image_path):
             os.remove(image_path)
 
     db.session.delete(selected_news)
     db.session.commit()
-    return redirect("/news")
+    return redirect(url_for('all_news'))
 
 
 
@@ -221,14 +229,14 @@ def update_news(id):
     if form.validate_on_submit():
         if form.img.data:
             if news_item.img:
-                old_image_path = os.path.join(app.root_path, 'static/images', news_item.img)
+                old_image_path = os.path.join(current_app.root_path, 'static/uploads', news_item.img)
                 if os.path.exists(old_image_path):
                     os.remove(old_image_path)
 
             file_img = form.img.data
             filename = secure_filename(file_img.filename)
             filename = make_unique(filename)
-            images_folder = os.path.join(app.root_path, 'static/images')
+            images_folder = os.path.join(current_app.root_path, 'static/uploads')
             os.makedirs(images_folder, exist_ok=True)
             file_img.save(os.path.join(images_folder, filename))
 
