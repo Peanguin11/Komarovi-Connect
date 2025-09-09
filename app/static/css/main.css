@@ -5,14 +5,19 @@ body {
   padding: 0;
   display: flex;
   flex-direction: column;
+  overflow-x: hidden;
   background-color: rgb(251, 251, 252);
-  font-family: "BpgIngiriArial", Arial, Helvetica, sans-serif;
+  font-family:
+    "AlkSanet", "BpgExsqMtavruli", "BpgIngiriArial", Arial, Helvetica,
+    sans-serif;
 }
 main {
   flex: 1;
 }
 button {
-  font-family: "BpgIngiriArial", Arial, Helvetica, sans-serif;
+  font-family:
+    "AlkSanet", "BpgExsqMtavruli", "BpgIngiriArial", Arial, Helvetica,
+    sans-serif;
 }
 
 #projects-preview {

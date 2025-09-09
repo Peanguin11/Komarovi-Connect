@@ -6,3 +6,12 @@
   font-family: "BpgNinoMtavruli";
   src: url(../fonts/bpg_nino_mtavruli_bold.ttf);
 }
+
+@font-face {
+  font-family: "BpgExsqMtavruli";
+  src: url(../fonts/bpg_extrasquare_mtavruli_2009.ttf);
+}
+@font-face {
+  font-family: "AlkSanet";
+  src: url(../fonts/alk-sanet.ttf);
+}

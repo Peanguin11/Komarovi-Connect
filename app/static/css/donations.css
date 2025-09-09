@@ -127,11 +127,11 @@ h1 {
     margin: 20px;
     padding: 20px;
   }
-  
+
   h1 {
     font-size: 1.8rem;
   }
-  
+
   form button[type="submit"],
   form a {
     display: block;
