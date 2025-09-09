@@ -1,5 +1,336 @@
-{% extends "base.html" %} {% block content %}
+{% extends "base.html" %} {% block head %}
+<link
+  rel="stylesheet"
+  href="{{ url_for('static', filename='css/index.css') }}"
+/>
+<link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+/>
+{% endblock %} {% block content %}
 
-<h1>home</h1>
+<section class="hero-section">
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <h1 class="hero-title">
+      მოგესალმებით <br />
+      კომაროვში
+    </h1>
+    <div class="hero-stats">
+      <div class="stat-card">
+        <div class="stat-icon">
+          <i class="fas fa-users"></i>
+        </div>
+        <div class="stat-number">10000+</div>
+        <div class="stat-label">ალუმნი</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon">
+          <i class="fas fa-trophy"></i>
+        </div>
+        <div class="stat-number">60</div>
+        <div class="stat-label">წარმატებული წელი</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon">
+          <i class="fas fa-heart"></i>
+        </div>
+        <div class="stat-number">1200+</div>
+        <div class="stat-label">მოსწავლე</div>
+      </div>
+    </div>
+  </div>
+</section>
+<div class="main-container">
+  <!-- Featured Events Section -->
+  {% if events %}
+  <section class="preview-section">
+    <div class="section-header">
+      <h2 class="section-title">უახლესი ღონისძიებები</h2>
+      <a href="{{ url_for('events') }}" class="section-link">ყველას ნახვა →</a>
+    </div>
+    <div class="events-preview">
+      <!-- Featured Event -->
+      <div class="event-card featured-event">
+        <div class="event-image">
+          {% if events[0].image %}
+          <img
+            src="{{ url_for('static', filename='uploads/' + events[0].image) }}"
+            alt="{{ events[0].title }}"
+          />
+          {% else %}
+          <div class="no-image">No image available</div>
+          {% endif %}
+        </div>
+        <div class="event-content">
+          <h3 class="event-title">{{ events[0].title }}</h3>
+          <p class="event-description limit-lines">
+            {{ events[0].description }}
+          </p>
+          <div class="event-meta">
+            <span class="event-date"
+              >{{ events[0].date_added.strftime("%B %d, %Y") }}</span
+            >
+            <span class="event-location">{{ events[0].location }}</span>
+          </div>
+          <a
+            href="{{ url_for('event', id=events[0].id) }}"
+            class="btn btn-primary"
+            >იხილეთ მეტი →</a
+          >
+        </div>
+      </div>
 
-{% endblock content%}
+      <!-- Other Events Preview -->
+      <div class="events-grid">
+        {% for event in events[1:5] %}
+        <div class="event-card mini-event">
+          <div class="event-image-small">
+            {% if event.image %}
+            <img
+              src="{{ url_for('static', filename='uploads/' + event.image) }}"
+            />
+            {% else %}
+            <div class="no-image-small">No image</div>
+            {% endif %}
+          </div>
+          <div class="event-content-small">
+            <h4 class="event-title-small limit-line">{{ event.title }}</h4>
+            <div class="event-meta-small limit-line">
+              <span>{{ event.date_added.strftime("%m/%d") }}</span>
+              <span>{{ event.location }}</span>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+  {% endif %}
+
+  <!-- Featured Projects Section -->
+  {% if projects %}
+  <section class="preview-section">
+    <div class="section-header">
+      <h2 class="section-title">აქტიური პროექტები</h2>
+      <a href="{{ url_for('projects') }}" class="section-link"
+        >ყველას ნახვა →</a
+      >
+    </div>
+    <div class="projects-preview">
+      {% for project in projects[:3] %}
+      <div class="project-card">
+        <div class="project-image">
+          <img
+            src="{{ url_for('static', filename='uploads/' + project.image) if project.image else url_for('static', filename='default-project.jpg') }}"
+            alt="{{ project.title }}"
+          />
+        </div>
+        <div class="project-content">
+          <h3 class="project-title limit-lines">{{ project.title }}</h3>
+          <p class="project-description limit-lines">
+            {{ project.description }}
+          </p>
+
+          <!-- Progress Bar -->
+          <div class="progress-section">
+            {% set progress_percent = (project.current_amount /
+            project.funding_goal * 100)|round(1) if project.funding_goal > 0
+            else 0 %}
+            <div class="progress-labels">
+              <span class="progress-label">დაფინანსების პროგრესი</span>
+              <span class="progress-percent">{{ progress_percent }}%</span>
+            </div>
+            <div class="progress-container">
+              <div
+                class="progress-bar"
+                style="width: {{ progress_percent }}%"
+              ></div>
+            </div>
+            <div class="progress-amounts">
+              <span>₾{{ project.current_amount }}</span>
+              <span class="goal">₾{{ project.funding_goal }}</span>
+            </div>
+          </div>
+
+          <div class="project-buttons">
+            <a
+              href="{{ url_for('project', id=project.id) }}"
+              class="btn btn-outline"
+              >იხილეთ მეტი</a
+            >
+            <a
+              href="{{ url_for('donate', id=project.id) }}"
+              class="btn btn-primary"
+              >დონაცია</a
+            >
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </section>
+  {% endif %}
+
+  <!-- Latest News Section -->
+  {% if news %}
+  <section class="preview-section">
+    <div class="section-header">
+      <h2 class="section-title">სიახლეები</h2>
+      <a href="{{ url_for('all_news') }}" class="section-link"
+        >ყველას ნახვა →</a
+      >
+    </div>
+    <div class="featured-news">
+      <div class="featured-news-image">
+        <img
+          src="{{ url_for('static', filename='uploads/' + news[0].img) }}"
+          alt="{{ news[0].name }}"
+        />
+      </div>
+      <div class="featured-news-content">
+        <h3 class="featured-news-title">{{ news[0].name }}</h3>
+        <p class="featured-news-description">{{ news[0].description }}</p>
+        <a
+          href="{{ url_for('opened_news', news_id=news[0].id) }}"
+          class="btn btn-primary"
+          >წაიკითხე →</a
+        >
+      </div>
+    </div>
+
+    <div class="news-preview">
+      {% for article in news[1:3] %}
+      <div class="news-card">
+        <div class="news-image">
+          <img
+            src="{{ url_for('static', filename='uploads/' + article.img) }}"
+            alt="{{ article.name }}"
+          />
+        </div>
+        <div class="news-content">
+          <h3 class="news-title limit-lines">{{ article.name }}</h3>
+          <p class="news-description limit-lines">{{ article.description }}</p>
+          <a
+            href="{{ url_for('opened_news', news_id=article.id) }}"
+            class="btn btn-outline"
+            >წაიკითხე →</a
+          >
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </section>
+  {% endif %}
+
+  <!-- Successful Alumni Section -->
+  <section class="successful-alumni-section">
+    <h2 class="section-title" style="text-align: center; margin-bottom: 40px">
+      წარმატებული ალუმნი
+    </h2>
+
+    <!-- Featured Alumni (Top) -->
+    <div class="alumni-featured-card">
+      <div class="alumni-featured-image">
+        <img
+          src="{{ url_for('static', filename='images/randomphoto.jpeg') }}"
+          alt="Featured Alumni"
+        />
+      </div>
+      <div class="alumni-featured-content">
+        <h3 class="alumni-name">Name Lastname</h3>
+        <p class="alumni-title">Title / Position</p>
+        <p class="alumni-description">
+          Short description of what they did and why they are successful. More
+          description to fill up the space to show how it looks.
+        </p>
+      </div>
+    </div>
+
+    <!-- Two Smaller Alumni Cards (Below) -->
+    <div class="alumni-small-cards">
+      <div class="alumni-card-small">
+        <div class="alumni-image-small">
+          <img
+            src="{{ url_for('static', filename='images/randomphoto.jpeg') }}"
+            alt="Alumni 1"
+          />
+        </div>
+        <div class="alumni-content-small">
+          <h4 class="alumni-name-small">Name Lastname</h4>
+          <p class="alumni-title-small">Title / Position</p>
+          <p class="alumni-description-small">
+            Short description of achievements or success. More description to
+            fill up the space to show how it looks.
+          </p>
+        </div>
+      </div>
+      <div class="alumni-card-small">
+        <div class="alumni-image-small">
+          <img
+            src="{{ url_for('static', filename='images/randomphoto.jpeg') }}"
+            alt="Alumni 2"
+          />
+        </div>
+        <div class="alumni-content-small">
+          <h4 class="alumni-name-small">Name Lastname</h4>
+          <p class="alumni-title-small">Title / Position</p>
+          <p class="alumni-description-small">
+            Short description of achievements or success. More description to
+            fill up the space to show how it looks.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="top-title">ალუმნი საბჭო</div>
+  <div class="alumni-board">
+    <div class="alumni-card">
+      <img
+        src="{{ url_for('static', filename='images/randomphoto.jpeg') }}"
+        alt="alumni-photo"
+      />
+      <span class="name">Name Lastname</span>
+      <span class="title">Title</span>
+      <span>Class of XXXX</span>
+      <span>Position</span>
+    </div>
+    <div class="alumni-card">
+      <img
+        src="{{ url_for('static', filename='images/randomphoto.jpeg') }}"
+        alt="alumni-photo"
+      />
+      <span class="name">Name Lastname</span>
+      <span class="title">Long Title</span>
+      <span>Class of XXXX</span>
+      <span>Position</span>
+    </div>
+    <div class="alumni-card">
+      <img
+        src="{{ url_for('static', filename='images/randomphoto.jpeg') }}"
+        alt="alumni-photo"
+      />
+      <span class="name">Name Lastname</span>
+      <span class="title">Longest Title</span>
+      <span>Class of XXXX</span>
+      <span>Position</span>
+    </div>
+  </div>
+  <section class="connect-alumni-section">
+    <div class="connect-alumni-card">
+      <h2 class="connect-alumni-title">ალუმნი ბიბლიოთეკა</h2>
+      <p class="connect-alumni-description">
+        იპოვე და დაუკავშირდი სხვა ალუმნის, გაერთიანდით გამოცდილებისა და
+        შესაძლებლობების გაზიარებისთვის.
+      </p>
+      <a
+        href="https://high-school-huddle.lovable.app/"
+        class="btn btn-primary connect-alumni-btn"
+      >
+        დაკავშირება
+      </a>
+    </div>
+  </section>
+</div>
+{% endblock %}
