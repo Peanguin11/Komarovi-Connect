@@ -116,22 +116,27 @@
 }
 /* Section Styling */
 .preview-section {
-  margin-bottom: 50px;
+  margin-bottom: 20px;
 }
 
 .section-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 25px;
-  padding-bottom: 10px;
+  display: grid;
+  grid-template-columns: auto;
+  position: relative;
+  margin-bottom: 10px;
+  padding-bottom: 30px;
   border-bottom: 2px solid #f0f0f0;
 }
-
+.section-title-parent {
+  display: flex;
+  align-items: center;
+}
 .section-title {
-  font-size: 1.8em;
+  display: inline;
+  font-size: 3em;
   color: #333;
   font-weight: 600;
+  margin: 120px auto;
 }
 
 .section-link {
@@ -139,6 +144,8 @@
   text-decoration: none;
   font-weight: 500;
   transition: color 0.3s ease;
+  justify-self: right;
+  position: absolute;
 }
 
 .section-link:hover {
@@ -517,7 +524,9 @@
 }
 .successful-alumni-section {
   width: 100%;
-  margin: 60px 0;
+  margin-bottom: 60px;
+  padding-top: 20px;
+  border-top: 2px solid #f0f0f0;
 }
 
 /* Featured Alumni Card */
@@ -628,6 +637,7 @@
 }
 
 .top-title {
+  margin-top: 80px;
   font-size: 30px;
   font-weight: bolder;
   text-align: center;
