@@ -45,8 +45,10 @@
   <!-- Featured Events Section -->
   {% if events %}
   <section class="preview-section">
-    <div class="section-header">
+    <div class="section-title-parent">
       <h2 class="section-title">უახლესი ღონისძიებები</h2>
+    </div>
+    <div class="section-header">
       <a href="{{ url_for('events') }}" class="section-link">ყველას ნახვა →</a>
     </div>
     <div class="events-preview">
@@ -111,8 +113,10 @@
   <!-- Featured Projects Section -->
   {% if projects %}
   <section class="preview-section">
-    <div class="section-header">
+    <div class="section-title-parent">
       <h2 class="section-title">აქტიური პროექტები</h2>
+    </div>
+    <div class="section-header">
       <a href="{{ url_for('projects') }}" class="section-link"
         >ყველას ნახვა →</a
       >
@@ -175,8 +179,10 @@
   <!-- Latest News Section -->
   {% if news %}
   <section class="preview-section">
-    <div class="section-header">
+    <div class="section-title-parent">
       <h2 class="section-title">სიახლეები</h2>
+    </div>
+    <div class="section-header">
       <a href="{{ url_for('all_news') }}" class="section-link"
         >ყველას ნახვა →</a
       >
@@ -224,11 +230,9 @@
   {% endif %}
 
   <!-- Successful Alumni Section -->
-  <section class="successful-alumni-section">
-    <h2 class="section-title" style="text-align: center; margin-bottom: 40px">
-      წარმატებული ალუმნი
-    </h2>
+  <div class="top-title">წარმატებული ალუმნი</div>
 
+  <section class="successful-alumni-section">
     <!-- Featured Alumni (Top) -->
     <div class="alumni-featured-card">
       <div class="alumni-featured-image">

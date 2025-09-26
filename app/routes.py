@@ -103,7 +103,7 @@ def update_event(id):
         event.image=filename
         db.session.add(event)
         db.session.commit()
-        return redirect(url_for('events'))
+        return redirect(url_for('add_events'))
     form.title.data = event.title
     form.description.data=event.description
     form.registration_link.data = event.registration_link
