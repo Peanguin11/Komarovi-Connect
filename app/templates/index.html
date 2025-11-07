@@ -229,98 +229,25 @@
   </section>
   {% endif %}
 
-  <!-- Successful Alumni Section -->
-  <div class="top-title">წარმატებული ალუმნი</div>
-
-  <section class="successful-alumni-section">
-    <!-- Featured Alumni (Top) -->
-    <div class="alumni-featured-card">
-      <div class="alumni-featured-image">
-        <img
-          src="{{ url_for('static', filename='images/randomphoto.jpeg') }}"
-          alt="Featured Alumni"
-        />
-      </div>
-      <div class="alumni-featured-content">
-        <h3 class="alumni-name">Name Lastname</h3>
-        <p class="alumni-title">Title / Position</p>
-        <p class="alumni-description">
-          Short description of what they did and why they are successful. More
-          description to fill up the space to show how it looks.
-        </p>
-      </div>
-    </div>
-
-    <!-- Two Smaller Alumni Cards (Below) -->
-    <div class="alumni-small-cards">
-      <div class="alumni-card-small">
-        <div class="alumni-image-small">
-          <img
-            src="{{ url_for('static', filename='images/randomphoto.jpeg') }}"
-            alt="Alumni 1"
-          />
-        </div>
-        <div class="alumni-content-small">
-          <h4 class="alumni-name-small">Name Lastname</h4>
-          <p class="alumni-title-small">Title / Position</p>
-          <p class="alumni-description-small">
-            Short description of achievements or success. More description to
-            fill up the space to show how it looks.
-          </p>
-        </div>
-      </div>
-      <div class="alumni-card-small">
-        <div class="alumni-image-small">
-          <img
-            src="{{ url_for('static', filename='images/randomphoto.jpeg') }}"
-            alt="Alumni 2"
-          />
-        </div>
-        <div class="alumni-content-small">
-          <h4 class="alumni-name-small">Name Lastname</h4>
-          <p class="alumni-title-small">Title / Position</p>
-          <p class="alumni-description-small">
-            Short description of achievements or success. More description to
-            fill up the space to show how it looks.
-          </p>
-        </div>
-      </div>
-    </div>
-  </section>
-
   <div class="top-title">ალუმნი საბჭო</div>
   <div class="alumni-board">
+    {% for person in alumni %}
     <div class="alumni-card">
+      {% if person.photo_path %}
       <img
-        src="{{ url_for('static', filename='images/randomphoto.jpeg') }}"
-        alt="alumni-photo"
+        src="{{ url_for('static', filename='uploads/' + person.photo_path) }}"
       />
-      <span class="name">Name Lastname</span>
-      <span class="title">Title</span>
-      <span>Class of XXXX</span>
-      <span>Position</span>
+      {% else %}
+      <div class="no-image">No image available</div>
+      {% endif %}
+      <span class="name">{{ person.name }}</span>
+      <span class="title">{{ person.title }}</span>
+      <span>Class of {{ person.class_year }}</span>
+      <span>{{ person.position }}</span>
     </div>
-    <div class="alumni-card">
-      <img
-        src="{{ url_for('static', filename='images/randomphoto.jpeg') }}"
-        alt="alumni-photo"
-      />
-      <span class="name">Name Lastname</span>
-      <span class="title">Long Title</span>
-      <span>Class of XXXX</span>
-      <span>Position</span>
-    </div>
-    <div class="alumni-card">
-      <img
-        src="{{ url_for('static', filename='images/randomphoto.jpeg') }}"
-        alt="alumni-photo"
-      />
-      <span class="name">Name Lastname</span>
-      <span class="title">Longest Title</span>
-      <span>Class of XXXX</span>
-      <span>Position</span>
-    </div>
+    {% endfor %}
   </div>
+
   <section class="connect-alumni-section">
     <div class="connect-alumni-card">
       <h2 class="connect-alumni-title">ალუმნი ბიბლიოთეკა</h2>
