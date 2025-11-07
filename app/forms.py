@@ -41,3 +41,11 @@ class NewProject(FlaskForm):
     funding_goal = IntegerField('Funding Goal', validators=[DataRequired()])
     image = FileField('Image')
     submit = SubmitField('Add Project')
+
+class NewAlumni(FlaskForm):
+    name = StringField('name')
+    photo_path = FileField('image')
+    title = StringField('title')
+    class_year = StringField('class year')  
+    position = StringField('position') 
+    submit = SubmitField('add alumni')

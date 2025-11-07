@@ -8,7 +8,7 @@ from datetime import datetime, timedelta
 from forms import *
 from config import app, db, ADMIN_PASSWORD, ADMIN_USERNAME
 import os
-from models import make_unique,  Events, News, Projects, login_manager, User #, AdminUser
+from models import make_unique,  Events, News, Projects, login_manager, User, AlumniBoard
 
 
 @app.route("/")
@@ -17,7 +17,8 @@ def home():
     all_events = Events.query.order_by(Events.date_added.desc()).all()
     all_news = News.query.order_by(News.date_added.desc()).all()
     all_projects = Projects.query.order_by(Projects.date_added.desc()).all()
-    return render_template('index.html', current_page='home', events=all_events, news=all_news, projects=all_projects)
+    alumni = AlumniBoard.query.all()
+    return render_template('index.html', current_page='home', events=all_events, news=all_news, projects=all_projects, alumni=alumni)
 
 
 
@@ -45,6 +46,89 @@ def project(id):
 @login_required
 def adminpanel():
     return render_template('adminpanel.html')
+
+@app.route("/adminpanel/alumni/", methods=["GET", "POST"])
+@login_required
+def add_alumni():
+    form = NewAlumni()
+    alumni = AlumniBoard.query
+    if form.validate_on_submit():
+        filename = None
+        if form.photo_path.data:
+
+            filename = secure_filename(form.photo_path.data.filename)
+            filename = make_unique(filename)
+            upload_path = os.path.join(current_app.root_path, 'static/uploads', filename)
+            form.photo_path.data.save(upload_path)
+
+
+        alumni = AlumniBoard(
+            title=form.title.data,
+            name=form.name.data,
+            class_year=form.class_year.data,
+            position = form.position.data,
+            photo_path=filename
+        )
+        if AlumniBoard.query.count() >= 3:
+            flash("No more than 3 allowed.")
+        else:
+            db.session.add(alumni)
+            db.session.commit()
+        return redirect(url_for('add_alumni'))
+
+    return render_template('add_alumni.html', form=form, alumni=alumni)
+@app.route("/adminpanel/alumni/update/<int:id>", methods=["GET", "POST"])
+@login_required
+def update_alumni(id):
+    alumni = AlumniBoard.query.get_or_404(id)
+    filename=None
+    form = NewAlumni()
+    if form.validate_on_submit():
+        if alumni.photo_path:
+            image_path = os.path.join(
+                current_app.root_path, "static/uploads", alumni.photo_path
+            )
+            if os.path.exists(image_path):
+                os.remove(image_path)
+        if form.photo_path.data:
+            filename = secure_filename(form.photo_path.data.filename)
+            filename = make_unique(filename)
+            upload_path = os.path.join(current_app.root_path, 'static/uploads', filename)
+            form.photo_path.data.save(upload_path)
+        alumni.title = form.title.data
+        alumni.name=form.name.data
+        alumni.class_year=form.class_year.data
+        alumni.position=form.position.data
+        alumni.photo_path=filename
+        db.session.add(alumni)
+        db.session.commit()
+        return redirect(url_for('adminpanel'))
+    form.title.data = alumni.title
+    form.name.data=alumni.name
+    form.class_year.data = alumni.class_year
+    form.position.data = alumni.position
+    form.photo_path.data=alumni.photo_path
+    return render_template('update_alumni.html', form=form, alumni=alumni)
+
+@app.route("/adminpanel/alumni/delete/<int:id>", methods=['GET', 'POST'])
+@login_required
+def delete_alumni(id):
+    alumni_to_delete = AlumniBoard.query.get_or_404(id)
+    try:
+        if alumni_to_delete.photo_path:
+            image_path = os.path.join(
+                current_app.root_path, "static/uploads", alumni_to_delete.photo_path
+            )
+            if os.path.exists(image_path):
+                os.remove(image_path)
+
+        db.session.delete(alumni_to_delete)
+        db.session.commit()
+        form = NewAlumni()
+        alumni = AlumniBoard.query
+        return redirect(url_for('add_alumni'))
+    except:
+        flash("error")
 
 @app.route("/adminpanel/events", methods=['GET', 'POST'])
 @login_required
